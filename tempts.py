@@ -632,4 +632,8 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # ------------------------------------------------------------------
 
-print(1+1)
+from pyspark import SparkConf , SparkContext
+conf = SparkConf().setMaster('local').setAppName('MyApp')
+sc = SparkContext(conf = conf)
+
+print(sc)
