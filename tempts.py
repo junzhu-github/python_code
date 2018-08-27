@@ -138,7 +138,6 @@ from mpl_toolkits.mplot3d import Axes3D
 # # In[5]:
 
 
-# os.chdir(r'D:\小鸡理财\OneDrive\python')
 
 # # 导入excel
 # # In[7]:
@@ -5670,4 +5669,179 @@ from mpl_toolkits.mplot3d import Axes3D
 # print(y_test)
 
 # ----------------------------------------------------------
+
+# from sklearn.preprocessing import Imputer  # 导入sklearn.preprocessing中的Imputer库
+
+# # 生成缺失数据
+# df = pd.DataFrame(np.random.randn(6, 4), columns=['col1', 'col2', 'col3', 'col4'])  # 生成一份数据
+# df.iloc[1:2, 1] = np.nan  # 增加缺失值
+# df.iloc[4, 3] = np.nan  # 增加缺失值
+# # print (df)
+
+# # 查看哪些值缺失
+# nan_all = df.isnull()  # 获得所有数据框中的N值
+# # print (nan_all)  # 打印输出
+
+# nan_col1 = df.isnull().any()  # 获得含有NA的列
+# nan_col2 = df.isnull().all()  # 获得全部为NA的列
+# print (nan_col1)  # 打印输出
+# print (nan_col2)  # 打印输出
+
+# ----------------------------------------------------------
+
+# # 生成异常数据
+# df = pd.DataFrame({'col1': [1, 120, 3, 5, 2, 12, 13],
+#                    'col2': [12, 17, 31, 53, 22, 32, 43]})
+# print (df,'\n')  # 打印输出
+
+# # 通过Z-Score方法判断异常值
+# df_zscore = df.copy()  # 复制一个用来存储Z-score得分的数据框
+# cols = df.columns  # 获得数据框的列名
+# for col in cols:  # 循环读取每列
+#     df_col = df[col]  # 得到每列的值
+#     z_score = (df_col - df_col.mean()) / df_col.std()  # 计算每列的Z-score得分
+#     df_zscore[col] = z_score.abs() > 2.2  # 判断Z-score得分是否大于2.2，如果是则是True，否则为False
+# print (df_zscore)  # 打印输出
+
+# ----------------------------------------------------------
+
+# from sklearn.preprocessing import OneHotEncoder  # 导入OneHotEncoder库
+
+# # 生成数据
+# df = pd.DataFrame({'id': [3566841, 6541227, 3512441],
+#                    'sex': ['male', 'Female', 'Female'],
+#                    'level': ['high', 'low', 'middle']})
+# print (df,'\n')  # 打印输出原始数据框
+# print(list(enumerate(df)))
+
+
+# # 自定义转换主过程
+# df_new = df.copy()  # 复制一份新的数据框用来存储转换结果
+# for col_num, col_name in enumerate(df):  # 循环读出每个列的索引值和列名
+#     col_data = df[col_name]  # 获得每列数据
+#     col_dtype = col_data.dtype  # 获得每列dtype类型
+#     if col_dtype == 'object':  # 如果dtype类型是object（非数值型），执行条件
+#         df_new = df_new.drop(col_name, 1)  # 删除df数据框中要进行标志转换的列
+#         value_sets = col_data.unique()  # 获取分类和顺序变量的唯一值域
+#         for value_unique in value_sets:  # 读取分类和顺序变量中的每个值
+#             col_name_new = col_name + '_' + value_unique  # 创建新的列名，使用原标题+值的方式命名
+#             col_tmp = df.iloc[:, col_num]  # 获取原始数据列
+#             new_col = (col_tmp == value_unique)  # 将原始数据列与每个值进行比较，相同为True，否则为False
+#             df_new[col_name_new] = new_col  # 为最终结果集增加新列值
+# print (df_new)  # 打印输出转换后的数据框
+
+# res = pd.get_dummies(df,columns = ['sex','level'])
+# print(res)
+
+# ----------------------------------------------------------
+
+# from sklearn.tree import DecisionTreeClassifier
+# from sklearn.decomposition import PCA
+
+# # 读取数据文件
+# data = np.loadtxt(r'D:\OneDrive\python\python_code\python数据分析\chapter3\data1.txt')  # 读取文本数据文件
+# x = data[:, :-1]  # 获得输入的x
+# y = data[:, -1]  # 获得目标变量y
+# print (x[0], y[0])  # 打印输出x和y的第一条记录
+
+# # 使用sklearn的DecisionTreeClassifier判断变量重要性
+# model_tree = DecisionTreeClassifier(random_state=0)  # 建立分类决策树模型对象
+# model_tree.fit(x, y)  # 将数据集的维度和目标变量输入模型
+# feature_importance = model_tree.feature_importances_  # 获得所有变量的重要性得分
+# print (feature_importance)  # 打印输出
+
+# # 使用sklearn的PCA进行维度转换
+# model_pca = PCA()  # 建立PCA模型对象
+# model_pca.fit(x)  # 将数据集输入模型
+# model_pca.transform(x)  # 对数据集进行转换映射
+# components = model_pca.components_  # 获得转换后的所有主成分
+# components_var = model_pca.explained_variance_  # 获得各主成分的方差
+# components_var_ratio = model_pca.explained_variance_ratio_  # 获得各主成分的方差占比
+# print (components[:2])  # 打印输出前2个主成分
+# print (components_var[:2])  # 打印输出前2个主成分的方差
+# print (components_var_ratio)  # 打印输出所有主成分的方差占比
+
+# ----------------------------------------------------------
+
+# import random  # 导入标准库
+
+# 简单随机抽样
+# data = np.loadtxt(r'D:\OneDrive\python\python_code\python数据分析\chapter3\data3.txt')  # 导入普通数据文件
+# data_sample = random.sample(list(data), 2000)  # 随机抽取2000个样本
+# print (data_sample[:2])  # 打印输出前2条数据
+# print (len(data_sample))  # 打印输出抽样样本量
+
+# # 等距抽样
+# data = np.loadtxt(r'D:\OneDrive\python\python_code\python数据分析\chapter3\data3.txt')  # 导入普通数据文件
+# sample_count = 2000  # 指定抽样数量
+# record_count = data.shape[0]  # 获取最大样本量
+# width = record_count / sample_count  # 计算抽样间距
+# data_sample = []  # 初始化空白列表，用来存放抽样结果数据
+# i = 0  # 自增计数以得到对应索引值
+# while len(data_sample) <= sample_count and i * width <= record_count - 1:  # 当样本量小于等于指定抽样数量并且矩阵索引在有效范围内时
+#     data_sample.append(data[i * width])  # 新增样本
+#     i += 1  # 自增长
+# print (data_sample[:2])  # 打印输出前2条数据
+# print (len(data_sample))  # 打印输出样本数量
+
+# ----------------------------------------------------------
+
+# 分层抽样
+# import random  # 导入标准库
+# # 导入有标签的数据文件
+# data2 = np.loadtxt(r'D:\OneDrive\python\python_code\python数据分析\chapter3\data2.txt')  # 导入带有分层逻辑的数据
+# each_sample_count = 200  # 定义每个分层的抽样数量
+# label_data_unique = np.unique(data2[:, -1])  # 定义分层值域
+# sample_list = []  # 定义空列表，用于存放临时分层数据
+# sample_data = []  # 定义空列表，用于存放最终抽样数据
+# sample_dict = {}  # 定义空字典，用来显示各分层样本数量
+# for label_data in label_data_unique:  # 遍历每个分层标签
+#     for data_tmp in data2:  # 读取每条数据
+#         if data_tmp[-1] == label_data:  # 如果数据最后一列等于标签
+#             sample_list.append(data_tmp)  # 将数据加入到分层数据中
+#     each_sample_data = random.sample(sample_list, each_sample_count)  # 对每层数据都随机抽样
+#     sample_data.extend(each_sample_data)  # 将抽样数据追加到总体样本集
+#     sample_dict[label_data] = len(each_sample_data)  # 样本集统计结果
+# print (sample_dict)  # 打印输出样本集统计结果
+
+# ----------------------------------------------------------
+
+# from sklearn import preprocessing
+
+# data = np.loadtxt(r'D:\OneDrive\python\python_code\python数据分析\chapter3\data6.txt', delimiter='\t')  # 读取数据
+
+# # Z-Score标准化
+# zscore_scaler = preprocessing.StandardScaler()  # 建立StandardScaler对象
+# data_scale_1 = zscore_scaler.fit_transform(data)  # StandardScaler标准化处理
+
+# # Max-Min标准化
+# minmax_scaler = preprocessing.MinMaxScaler()  # 建立MinMaxScaler模型对象
+# data_scale_2 = minmax_scaler.fit_transform(data)  # MinMaxScaler标准化处理
+
+# # MaxAbsScaler标准化
+# maxabsscaler_scaler = preprocessing.MaxAbsScaler()  # 建立MaxAbsScaler对象
+# data_scale_3 = maxabsscaler_scaler.fit_transform(data)  # MaxAbsScaler标准化处理
+
+# # RobustScaler标准化
+# robustscalerr_scaler = preprocessing.RobustScaler()  # 建立RobustScaler标准化对象
+# data_scale_4 = robustscalerr_scaler.fit_transform(data)  # RobustScaler标准化标准化处理
+
+# # 展示多网格结果
+# data_list = [data, data_scale_1, data_scale_2, data_scale_3, data_scale_4]  # 创建数据集列表
+# scalar_list = [15, 10, 15, 10, 15, 10]  # 创建点尺寸列表
+# color_list = ['black', 'green', 'blue', 'yellow', 'red']  # 创建颜色列表
+# merker_list = ['o', ',', '+', 's', 'p']  # 创建样式列表
+# title_list = ['source data', 'zscore_scaler', 'minmax_scaler', 'maxabsscaler_scaler', 'robustscalerr_scaler']  # 创建标题列表
+# for i, data_single in enumerate(data_list):  # 循环得到索引和每个数值
+#     plt.subplot(2, 3, i + 1)  # 确定子网格
+#     plt.scatter(data_single[:, :-1], data_single[:, -1], s=scalar_list[i], marker=merker_list[i],
+#                 c=color_list[i])  # 子网格展示散点图
+#     plt.title(title_list[i])  # 设置子网格标题
+# plt.suptitle("raw data and standardized data")  # 设置总标题
+# plt.show()  # 展示图形
+
+# ----------------------------------------------------------
+
+
+
 
