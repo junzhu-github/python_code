@@ -5842,6 +5842,179 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # ----------------------------------------------------------
 
+# print('begin_to_work!')
+
+# # - 修改工作目录
+# file_add = r'D:\小鸡理财\百度云同步盘\小鸡理财\每日数据'
+# file_name = '8月派券.xlsx'
+# os.chdir(file_add)
+
+# # - 导入待派券名单
+# with pd.ExcelFile(os.path.abspath(file_name)) as xlsx:
+#     df_jd_bj = pd.read_excel(xlsx,'经典本金')
+#     df_jd_lx = pd.read_excel(xlsx,'经典利息')
+#     df_cg = pd.read_excel(xlsx,'存管回款')
+# # df_cg.info()
+
+
+# print('import_ok!')
+
+# # - 合并回款表
+# df_hk = df_jd_bj.append([df_jd_lx,df_cg], ignore_index=True)
+# # df_hk.info()
+
+# # - 整理回款表
+# df_hk['身份证'] = df_hk['身份证'].str.upper()
+# df_hk['发放时间'] = pd.to_datetime(df_hk['预计本次发放时间'])
+# del df_hk['预计本次发放时间']
+
+# df_hk.to_excel('res.xlsx')
+# print('output_ok!')
+
+# ----------------------------------------------------------
+
+# import numpy as np  # 导入numpy库
+# import matplotlib.pyplot as plt  # 导入matplotlib库
+# from sklearn.cluster import KMeans  # 导入sklearn聚类模块
+# from sklearn import metrics  # 导入sklearn效果评估模块
+
+# # 数据准备
+# raw_data = np.loadtxt(r'D:\OneDrive\python\python_code\python数据分析\chapter4\cluster.txt')  # 导入数据文件
+# # print(raw_data[:3,:])
+
+# X = raw_data[:, :-1]  # 分割要聚类的数据
+# # print('\n',X.shape)
+
+# y_true = raw_data[:, -1]
+# # print('\n',y_true[:3])
+
+# # 训练聚类模型
+# n_clusters = 10  # 设置聚类数量
+# model_kmeans = KMeans(n_clusters=n_clusters, random_state=0)  # 建立聚类模型对象
+# model_kmeans.fit(X)  # 训练聚类模型
+# y_pre = model_kmeans.predict(X)  # 预测聚类模型
+# # print('y_pre:',y_pre)
+# # print('type(y_pre):',type(y_pre))
+
+# # 模型效果指标评估
+# n_samples, n_features = X.shape  # 总样本量,总特征数
+# # print('n_samples:',n_samples)
+# # print('n_features:',n_features)
+
+# inertias = model_kmeans.inertia_  # 样本距离最近的聚类中心的总和
+# adjusted_rand_s = metrics.adjusted_rand_score(y_true, y_pre)  # 调整后的兰德指数
+# mutual_info_s = metrics.mutual_info_score(y_true, y_pre)  # 互信息
+# adjusted_mutual_info_s = metrics.adjusted_mutual_info_score(y_true, y_pre)  # 调整后的互信息
+# homogeneity_s = metrics.homogeneity_score(y_true, y_pre)  # 同质化得分
+# completeness_s = metrics.completeness_score(y_true, y_pre)  # 完整性得分
+# v_measure_s = metrics.v_measure_score(y_true, y_pre)  # V-measure得分
+# silhouette_s = metrics.silhouette_score(X, y_pre, metric='euclidean')  # 平均轮廓系数
+# calinski_harabaz_s = metrics.calinski_harabaz_score(X, y_pre)  # Calinski和Harabaz得分
+
+# print ('samples: %d \t features: %d' % (n_samples, n_features))  # 打印输出样本量和特征数量
+# print (70 * '-')  # 打印分隔线
+# print ('ine\tARI\tMI\tAMI\thomo\tcomp\tv_m\tsilh\tc&h')  # 打印输出指标标题
+# print ('%d\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%d' % (
+# inertias, adjusted_rand_s, mutual_info_s, adjusted_mutual_info_s, homogeneity_s, completeness_s, v_measure_s,
+# silhouette_s, calinski_harabaz_s))  # 打印输出指标值
+# print (70 * '-')  # 打印分隔线
+# print ('short name \t full name')  # 打印输出缩写和全名标题
+# print ('ine \t inertias')
+# print ('ARI \t adjusted_rand_s')
+# print ('MI \t mutual_info_s')
+# print ('AMI \t adjusted_mutual_info_s')
+# print ('homo \t homogeneity_s')
+# print ('comp \t completeness_s')
+# print ('v_m \t v_measure_s')
+# print ('silh \t silhouette_s')
+# print ('c&h \t calinski_harabaz_s')
+
+# # 模型效果可视化
+# centers = model_kmeans.cluster_centers_  # 各类别中心
+# # colors = ['#4EACC5', '#FF9C34', '#4E9A06']  # 设置不同类别的颜色
+# plt.figure()  # 建立画布
+# for i in range(n_clusters):  # 循环读类别
+#     index_sets = np.where(y_pre == i)  # 找到相同类的索引集合
+#     # print('index_sets:',index_sets)
+
+#     cluster = X[index_sets]  # 将相同类的数据划分为一个聚类子集
+#     plt.scatter(cluster[:, 0], cluster[:, 1], marker='.')  # 展示聚类子集内的样本点
+#     plt.plot(centers[i][0], centers[i][1], 'o', markeredgecolor='k',
+#              markersize=6)  # 展示各聚类子集的中心
+# plt.show()  # 展示图像
+
+# # 模型应用
+# new_X = [1, 3.6]
+# print('new_X:',new_X)
+# print(np.array(new_X).reshape(1,-1).shape)
+# cluster_label = model_kmeans.predict(np.array(new_X).reshape(1,-1))
+# print ('cluster of new data point is: %d' % cluster_label)
+
+# ----------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
