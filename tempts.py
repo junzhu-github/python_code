@@ -5952,9 +5952,172 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # ----------------------------------------------------------
 
+# 4.2 回归分析
+# 导入库
+# import numpy as np  # numpy库
+# from sklearn.linear_model import BayesianRidge, LinearRegression, ElasticNet  # 批量导入要实现的回归算法
+# from sklearn.svm import SVR  # SVM中的回归算法
+# from sklearn.ensemble.gradient_boosting import GradientBoostingRegressor  # 集成算法
+# from sklearn.model_selection import cross_val_score  # 交叉检验
+# from sklearn.metrics import explained_variance_score, mean_absolute_error, mean_squared_error, r2_score  # 批量导入指标算法
+# import pandas as pd  # 导入pandas
+# import matplotlib.pyplot as plt  # 导入图形展示库
 
+# # 数据准备
+# raw_data = np.loadtxt(r'D:\OneDrive\python\python_code\python数据分析\chapter4\regression.txt')  # 读取数据文件
+# X = raw_data[:, :-1]  # 分割自变量
+# y = raw_data[:, -1]  # 分割因变量
 
+# # 训练回归模型
+# n_folds = 6  # 设置交叉检验的次数
+# model_br = BayesianRidge()  # 建立贝叶斯岭回归模型对象
+# model_lr = LinearRegression()  # 建立普通线性回归模型对象
+# model_etc = ElasticNet()  # 建立弹性网络回归模型对象
+# model_svr = SVR()  # 建立支持向量机回归模型对象
+# model_gbr = GradientBoostingRegressor()  # 建立梯度增强回归模型对象
+# model_names = ['BayesianRidge', 'LinearRegression', 'ElasticNet', 'SVR', 'GBR']  # 不同模型的名称列表
+# model_dic = [model_br, model_lr, model_etc, model_svr, model_gbr]  # 不同回归模型对象的集合
+# cv_score_list = []  # 交叉检验结果列表
+# pre_y_list = []  # 各个回归模型预测的y值列表
+# for model in model_dic:  # 读出每个回归模型对象
+#     scores = cross_val_score(model, X, y, cv=n_folds)  # 将每个回归模型导入交叉检验模型中做训练检验
+#     cv_score_list.append(scores)  # 将交叉检验结果存入结果列表
+#     pre_y_list.append(model.fit(X, y).predict(X))  # 将回归训练中得到的预测y存入列表
 
+# # 模型效果指标评估
+# n_samples, n_features = X.shape  # 总样本量,总特征数
+# model_metrics_name = [explained_variance_score, mean_absolute_error, mean_squared_error, r2_score]  # 回归评估指标对象集
+# model_metrics_list = []  # 回归评估指标列表
+# for i in range(5):  # 循环每个模型索引
+#     tmp_list = []  # 每个内循环的临时结果列表
+#     for m in model_metrics_name:  # 循环每个指标对象
+#         tmp_score = m(y, pre_y_list[i])  # 计算每个回归指标结果
+#         tmp_list.append(tmp_score)  # 将结果存入每个内循环的临时结果列表
+#     model_metrics_list.append(tmp_list)  # 将结果存入回归评估指标列表
+# df1 = pd.DataFrame(cv_score_list, index=model_names)  # 建立交叉检验的数据框
+# df2 = pd.DataFrame(model_metrics_list, index=model_names, columns=['ev', 'mae', 'mse', 'r2'])  # 建立回归指标的数据框
+# print ('samples: %d \t features: %d' % (n_samples, n_features))  # 打印输出样本量和特征数量
+# print (70 * '-')  # 打印分隔线
+# print ('cross validation result:')  # 打印输出标题
+# print (df1)  # 打印输出交叉检验的数据框
+# print (70 * '-')  # 打印分隔线
+# print ('regression metrics:')  # 打印输出标题
+# print (df2)  # 打印输出回归指标的数据框
+# print (70 * '-')  # 打印分隔线
+# print ('short name \t full name')  # 打印输出缩写和全名标题
+# print ('ev \t explained_variance')
+# print ('mae \t mean_absolute_error')
+# print ('mse \t mean_squared_error')
+# print ('r2 \t r2')
+# print (70 * '-')  # 打印分隔线
+
+# # 模型效果可视化
+# plt.figure()  # 创建画布
+# plt.plot(np.arange(X.shape[0]), y, color='k', label='true y')  # 画出原始值的曲线
+# color_list = ['r', 'b', 'g', 'y', 'c']  # 颜色列表
+# linestyle_list = ['-', '.', 'o', 'v', '*']  # 样式列表
+# for i, pre_y in enumerate(pre_y_list):  # 读出通过回归模型预测得到的索引及结果
+#     plt.plot(np.arange(X.shape[0]), pre_y_list[i], color_list[i], label=model_names[i])  # 画出每条预测结果线
+# plt.title('regression result comparison')  # 标题
+# plt.legend(loc='upper right')  # 图例位置
+# plt.ylabel('real and predicted value')  # y轴标题
+# plt.show()  # 展示图像
+
+# # 模型应用
+# print ('regression prediction')
+# new_point_set = [[1.05393, 0., 8.14, 0., 0.538, 5.935, 29.3, 4.4986, 4., 307., 21., 386.85, 6.58],
+#                  [0.7842, 0., 8.14, 0., 0.538, 5.99, 81.7, 4.2579, 4., 307., 21., 386.75, 14.67],
+#                  [0.80271, 0., 8.14, 0., 0.538, 5.456, 36.6, 3.7965, 4., 307., 21., 288.99, 11.69],
+#                  [0.7258, 0., 8.14, 0., 0.538, 5.727, 69.5, 3.7965, 4., 307., 21., 390.95, 11.28]]  # 要预测的新数据集
+# for i, new_point in enumerate(new_point_set):  # 循环读出每个要预测的数据点
+#     new_pre_y = model_gbr.predict(np.array(new_point).reshape(1,-1))  # 使用GBR进行预测
+#     print ('predict for new point %d is:  %.2f' % (i + 1, new_pre_y))  # 打印输出每个数据点的预测信息
+
+# ----------------------------------------------------------
+
+# 4.3 分类分析
+# 导入库
+import numpy as np  # 导入numpy库
+from sklearn.model_selection import train_test_split  # 数据分区库
+from sklearn import tree  # 导入决策树库
+from sklearn.metrics import accuracy_score, auc, confusion_matrix, f1_score, precision_score, recall_score, \
+    roc_curve  # 导入指标库
+import prettytable  # 导入表格库
+import pydotplus  # 导入dot插件库
+import matplotlib.pyplot as plt  # 导入图形展示库
+
+# 数据准备
+raw_data = np.loadtxt(r'D:\OneDrive\python\python_code\python数据分析\chapter4\classification.csv', delimiter=',', skiprows=1, )  # 读取数据文件
+X = raw_data[:, :-1]  # 分割X
+y = raw_data[:, -1]  # 分割y
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.3, random_state=0)  # 将数据分为训练集和测试集
+
+# 训练分类模型
+model_tree = tree.DecisionTreeClassifier(random_state=0)  # 建立决策树模型对象
+model_tree.fit(X_train, y_train)  # 训练决策树模型
+pre_y = model_tree.predict(X_test)  # 使用测试集做模型效果检验
+
+# 输出模型概况
+n_samples, n_features = X.shape  # 总样本量,总特征数
+print ('samples: %d \t features: %d' % (n_samples, n_features))  # 打印输出样本量和特征数量
+print (70 * '-')  # 打印分隔线
+
+# 混淆矩阵
+confusion_m = confusion_matrix(y_test, pre_y)  # 获得混淆矩阵
+confusion_matrix_table = prettytable.PrettyTable()  # 创建表格实例
+confusion_matrix_table.add_row(confusion_m[0, :])  # 增加第一行数据
+confusion_matrix_table.add_row(confusion_m[1, :])  # 增加第二行数据
+print ('confusion matrix')
+print (confusion_matrix_table)  # 打印输出混淆矩阵
+
+# 核心评估指标
+y_score = model_tree.predict_proba(X_test)  # 获得决策树的预测概率
+fpr, tpr, thresholds = roc_curve(y_test, y_score[:, 1])  # ROC
+auc_s = auc(fpr, tpr)  # AUC
+accuracy_s = accuracy_score(y_test, pre_y)  # 准确率
+precision_s = precision_score(y_test, pre_y)  # 精确度
+recall_s = recall_score(y_test, pre_y)  # 召回率
+f1_s = f1_score(y_test, pre_y)  # F1得分
+core_metrics = prettytable.PrettyTable()  # 创建表格实例
+core_metrics.field_names = ['auc', 'accuracy', 'precision', 'recall', 'f1']  # 定义表格列名
+core_metrics.add_row([auc_s, accuracy_s, precision_s, recall_s, f1_s])  # 增加数据
+print ('core metrics')
+print (core_metrics)  # 打印输出核心评估指标
+
+# 模型效果可视化
+names_list = ['age', 'gender', 'income', 'rfm_score']  # 分类模型维度列表
+color_list = ['r', 'c', 'b', 'g']  # 颜色列表
+plt.figure()  # 创建画布
+# 子网格1：ROC曲线
+plt.subplot(1, 2, 1)  # 第一个子网格
+plt.plot(fpr, tpr, label='ROC')  # 画出ROC曲线
+plt.plot([0, 1], [0, 1], linestyle='--', color='k', label='random chance')  # 画出随机状态下的准确率线
+plt.title('ROC')  # 子网格标题
+plt.xlabel('false positive rate')  # X轴标题
+plt.ylabel('true positive rate')  # y轴标题
+plt.legend(loc=0)
+# 子网格2：指标重要性
+feature_importance = model_tree.feature_importances_  # 获得指标重要性
+plt.subplot(1, 2, 2)  # 第二个子网格
+plt.bar(np.arange(feature_importance.shape[0]), feature_importance, tick_label=names_list, color=color_list)  # 画出条形图
+plt.title('feature importance')  # 子网格标题
+plt.xlabel('features')  # x轴标题
+plt.ylabel('importance')  # y轴标题
+plt.suptitle('classification result')  # 图形总标题
+plt.show()  # 展示图形
+
+# 保存决策树规则图为PDF文件
+dot_data = tree.export_graphviz(model_tree, out_file=None, max_depth=5, feature_names=names_list, filled=True,
+                                rounded=True)  # 将决策树规则生成dot对象
+graph = pydotplus.graph_from_dot_data(dot_data)  # 通过pydotplus将决策树规则解析为图形
+graph.write_pdf("tree.pdf")  # 将决策树规则保存为PDF文件
+
+# 模型应用
+X_new = [[40, 0, 55616, 0], [17, 0, 55568, 0], [55, 1, 55932, 1]]
+print ('classification prediction')
+for i, data in enumerate(X_new):
+    y_pre_new = model_tree.predict(np.array(data).reshape(1,-1))
+    print ('classification for %d record is: %d' % (i + 1, y_pre_new))
 
 
 
