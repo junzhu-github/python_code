@@ -1,0 +1,718 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{????-DASHBOARD-combine}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{IPython}\PY{n+nn}{.}\PY{n+nn}{core}\PY{n+nn}{.}\PY{n+nn}{display} \PY{k}{as} \PY{n+nn}{di}
+        
+        \PY{c+c1}{\PYZsh{} This line will hide code by default when the notebook is exported as HTML}
+        \PY{n}{di}\PY{o}{.}\PY{n}{display\PYZus{}html}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZlt{}script\PYZgt{}jQuery(function() }\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{if (jQuery(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{body.notebook\PYZus{}app}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{).length == 0) }\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{ jQuery(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{.input\PYZus{}area}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{).toggle(); jQuery(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{.prompt}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{).toggle();\PYZcb{}\PYZcb{});\PYZlt{}/script\PYZgt{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{raw}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{}coding=utf\PYZhy{}8}
+        \PY{c+c1}{\PYZsh{} import os}
+        \PY{k+kn}{import} \PY{n+nn}{re}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{c+c1}{\PYZsh{} import matplotlib.pyplot as plt}
+        \PY{c+c1}{\PYZsh{} \PYZpc{}matplotlib inline}
+        
+        \PY{k+kn}{from} \PY{n+nn}{pyecharts} \PY{k}{import} \PY{n}{Overlap}\PY{p}{,} \PY{n}{Bar}\PY{p}{,} \PY{n}{Line}\PY{p}{,} \PY{n}{Gauge}\PY{p}{,} \PY{n}{Pie}\PY{p}{,} \PY{n}{Grid}
+        
+        \PY{k+kn}{from} \PY{n+nn}{datetime} \PY{k}{import} \PY{n}{date}\PY{p}{,} \PY{n}{timedelta}
+        
+        \PY{k+kn}{from} \PY{n+nn}{pyecharts} \PY{k}{import} \PY{n}{online}
+        \PY{n}{online}\PY{p}{(}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} os.chdir(\PYZsq{}D:\PYZbs{}OneDrive\PYZbs{}python\PYZbs{}data\PYZsq{})}
+        
+        \PY{k}{with} \PY{n}{pd}\PY{o}{.}\PY{n}{ExcelFile}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{D:/OneDrive/python/data/日报.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{xlsx}\PY{p}{:}
+            \PY{n}{df\PYZus{}zhuce} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{n}{xlsx}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{注册}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{df\PYZus{}kaitong} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{n}{xlsx}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{开通}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{df\PYZus{}touzi} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{n}{xlsx}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{df\PYZus{}quan} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{n}{xlsx}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{券}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{df\PYZus{}huikuan} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{n}{xlsx}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{回款}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \section{一、注册统计}\label{ux4e00ux6ce8ux518cux7edfux8ba1}
+
+    \subsubsection{1.注册人数}\label{ux6ce8ux518cux4ebaux6570}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{df\PYZus{}zhuce}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{注册日期}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{to\PYZus{}datetime}\PY{p}{(}\PY{n}{df\PYZus{}zhuce}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{注册时间}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{dt}\PY{o}{.}\PY{n}{strftime}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{m\PYZhy{}}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+        \PY{n}{zhuce\PYZus{}num} \PY{o}{=} \PY{n}{df\PYZus{}zhuce}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{注册日期}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{用户名}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n}{yesterday} \PY{o}{=} \PY{n}{date}\PY{o}{.}\PY{n}{today}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{timedelta}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{截至 }\PY{l+s+si}{\PYZob{}0\PYZcb{}}\PY{l+s+s1}{ ,本月累计注册人数 }\PY{l+s+si}{\PYZob{}1\PYZcb{}}\PY{l+s+s1}{ 人。}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{yesterday}\PY{o}{.}\PY{n}{strftime}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{m\PYZhy{}}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}\PY{n}{df\PYZus{}zhuce}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+截至 09-05 ,本月累计注册人数 702 人。
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{attr} \PY{o}{=} \PY{n}{zhuce\PYZus{}num}\PY{o}{.}\PY{n}{index}
+        \PY{n}{v1} \PY{o}{=} \PY{n}{zhuce\PYZus{}num}\PY{o}{.}\PY{n}{values}
+        \PY{n}{bar} \PY{o}{=} \PY{n}{Bar}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{每日注册}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{2018\PYZhy{}08}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{width}\PY{o}{=}\PY{l+m+mi}{900}\PY{p}{)}
+        \PY{n}{bar}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{注册人数}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{attr}\PY{p}{,}\PY{n}{v1}\PY{p}{,}\PY{n}{mark\PYZus{}line}\PY{o}{=}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{average}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}\PY{n}{mark\PYZus{}point}\PY{o}{=}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{max}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{min}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+        \PY{n}{bar}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}4}]:} <pyecharts.charts.bar.Bar at 0x50587b8>
+\end{Verbatim}
+            
+    \subsubsection{2、各邀请渠道注册人数}\label{ux5404ux9080ux8bf7ux6e20ux9053ux6ce8ux518cux4ebaux6570}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{s\PYZus{}yw} \PY{o}{=} \PY{n}{df\PYZus{}zhuce}\PY{p}{[}\PY{n}{df\PYZus{}zhuce}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{邀请渠道}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{业务邀请}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{注册日期}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{用户名}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}
+        \PY{n}{s\PYZus{}pt} \PY{o}{=} \PY{n}{df\PYZus{}zhuce}\PY{p}{[}\PY{n}{df\PYZus{}zhuce}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{邀请渠道}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{普通邀请}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{注册日期}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{用户名}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}
+        \PY{n}{s\PYZus{}zz} \PY{o}{=} \PY{n}{df\PYZus{}zhuce}\PY{p}{[}\PY{n}{df\PYZus{}zhuce}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{邀请渠道}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{自主注册}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{注册日期}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{用户名}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n}{df\PYZus{}yw} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{s\PYZus{}yw}\PY{p}{,}\PY{n}{index}\PY{o}{=}\PY{n}{zhuce\PYZus{}num}\PY{o}{.}\PY{n}{index}\PY{p}{)}\PY{o}{.}\PY{n}{fillna}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+        \PY{n}{df\PYZus{}pt} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{s\PYZus{}pt}\PY{p}{,}\PY{n}{index}\PY{o}{=}\PY{n}{zhuce\PYZus{}num}\PY{o}{.}\PY{n}{index}\PY{p}{)}\PY{o}{.}\PY{n}{fillna}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+        \PY{n}{df\PYZus{}zz} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{s\PYZus{}zz}\PY{p}{,}\PY{n}{index}\PY{o}{=}\PY{n}{zhuce\PYZus{}num}\PY{o}{.}\PY{n}{index}\PY{p}{)}\PY{o}{.}\PY{n}{fillna}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{截至 }\PY{l+s+si}{\PYZob{}0\PYZcb{}}\PY{l+s+s1}{ :}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{普通邀请注册 }\PY{l+s+si}{\PYZob{}1\PYZcb{}}\PY{l+s+s1}{ 人，}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{业务邀请注册 }\PY{l+s+si}{\PYZob{}2\PYZcb{}}\PY{l+s+s1}{ 人，}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{自主注册（含推广）注册 }\PY{l+s+si}{\PYZob{}3\PYZcb{}}\PY{l+s+s1}{ 人。}\PY{l+s+s1}{\PYZsq{}}
+              \PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{yesterday}\PY{o}{.}\PY{n}{strftime}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{m\PYZhy{}}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+                      \PY{n}{df\PYZus{}pt}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{用户名}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{,}
+                      \PY{n}{df\PYZus{}yw}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{用户名}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{,}
+                      \PY{n}{df\PYZus{}zz}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{用户名}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+截至 09-05 :
+普通邀请注册 4.0 人，
+业务邀请注册 627 人，
+自主注册（含推广）注册 71 人。
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{attr} \PY{o}{=} \PY{n}{zhuce\PYZus{}num}\PY{o}{.}\PY{n}{index}
+        \PY{n}{v1} \PY{o}{=} \PY{n}{df\PYZus{}yw}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{用户名}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        \PY{n}{v2} \PY{o}{=} \PY{n}{df\PYZus{}pt}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{用户名}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        \PY{n}{v3} \PY{o}{=} \PY{n}{df\PYZus{}zz}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{用户名}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        
+        \PY{n}{bar} \PY{o}{=} \PY{n}{Bar}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{每日注册}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{按邀请渠道统计}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{width}\PY{o}{=}\PY{l+m+mi}{900}\PY{p}{)}
+        \PY{n}{bar}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{业务邀请}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{attr}\PY{p}{,}\PY{n}{v1}\PY{p}{,}\PY{n}{mark\PYZus{}line}\PY{o}{=}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{average}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}\PY{n}{mark\PYZus{}point}\PY{o}{=}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{max}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{min}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+        \PY{n}{bar}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{普通邀请}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{attr}\PY{p}{,}\PY{n}{v2}\PY{p}{,}\PY{n}{mark\PYZus{}line}\PY{o}{=}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{average}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}\PY{n}{mark\PYZus{}point}\PY{o}{=}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{max}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{min}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+        \PY{n}{bar}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{自主注册}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{attr}\PY{p}{,}\PY{n}{v3}\PY{p}{,}\PY{n}{mark\PYZus{}line}\PY{o}{=}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{average}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}\PY{n}{mark\PYZus{}point}\PY{o}{=}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{max}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{min}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+        \PY{n}{bar}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}6}]:} <pyecharts.charts.bar.Bar at 0x85f2a90>
+\end{Verbatim}
+            
+    \subsubsection{3、新注册 --- 开通 ---
+投资转化率}\label{ux65b0ux6ce8ux518c-ux5f00ux901a-ux6295ux8d44ux8f6cux5316ux7387}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{df\PYZus{}touzi\PYZus{}new} \PY{o}{=} \PY{n}{df\PYZus{}touzi}\PY{p}{[}\PY{n}{df\PYZus{}touzi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{注册时间}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{str}\PY{o}{.}\PY{n}{contains}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2018\PYZhy{}08}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{]}
+        \PY{n}{new\PYZus{}percntage} \PY{o}{=} \PY{n}{df\PYZus{}touzi\PYZus{}new}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{用户名}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{nunique}\PY{p}{(}\PY{p}{)} \PY{o}{/} \PY{n}{df\PYZus{}kaitong}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{*} \PY{l+m+mi}{100}
+        
+        \PY{n}{tip} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{本月注册 }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{df\PYZus{}zhuce}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ 人，开通存管 }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{df\PYZus{}kaitong}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ 人，投资 }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{df\PYZus{}touzi\PYZus{}new}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{用户名}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{nunique}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ 人}\PY{l+s+s1}{\PYZsq{}}
+        
+        \PY{n}{gauge} \PY{o}{=} \PY{n}{Gauge}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{投资\PYZhy{}存管开通人数比例}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{gauge}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{tip}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{转化率}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n+nb}{round}\PY{p}{(}\PY{n}{new\PYZus{}percntage}\PY{p}{)}\PY{p}{)}
+        \PY{n}{gauge}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}7}]:} <pyecharts.charts.gauge.Gauge at 0x8790cf8>
+\end{Verbatim}
+            
+    \subsubsection{4、注册用户投资统计}\label{ux6ce8ux518cux7528ux6237ux6295ux8d44ux7edfux8ba1}
+
+    4.1、投资金额和人数
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{df\PYZus{}touzi\PYZus{}new} \PY{o}{=} \PY{n}{df\PYZus{}touzi\PYZus{}new}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+        \PY{n}{df\PYZus{}touzi\PYZus{}new}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资日期}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{to\PYZus{}datetime}\PY{p}{(}\PY{n}{df\PYZus{}touzi\PYZus{}new}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资时间}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{dt}\PY{o}{.}\PY{n}{strftime}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{m\PYZhy{}}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+        \PY{n}{gp\PYZus{}touzi\PYZus{}new} \PY{o}{=} \PY{n}{df\PYZus{}touzi\PYZus{}new}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资日期}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{用户名}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}\PY{n}{as\PYZus{}index}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{总投资金额}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n}{gp\PYZus{}touzi\PYZus{}new\PYZus{}renshu} \PY{o}{=} \PY{n}{gp\PYZus{}touzi\PYZus{}new}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资日期}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{用户名}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n}{gp\PYZus{}touzi\PYZus{}new\PYZus{}money} \PY{o}{=} \PY{n}{gp\PYZus{}touzi\PYZus{}new}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资日期}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{总投资金额}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{截至 }\PY{l+s+si}{\PYZob{}0\PYZcb{}}\PY{l+s+s1}{ ,本月新注册用户累计投资额 }\PY{l+s+si}{\PYZob{}1\PYZcb{}}\PY{l+s+s1}{ 元。}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{yesterday}\PY{o}{.}\PY{n}{strftime}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{m\PYZhy{}}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}\PY{n}{gp\PYZus{}touzi\PYZus{}new\PYZus{}money}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+截至 09-05 ,本月新注册用户累计投资额 87800.0 元。
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{attr} \PY{o}{=} \PY{n}{gp\PYZus{}touzi\PYZus{}new\PYZus{}renshu}\PY{o}{.}\PY{n}{index}
+        \PY{n}{value\PYZus{}renshu} \PY{o}{=} \PY{n}{gp\PYZus{}touzi\PYZus{}new\PYZus{}renshu}\PY{o}{.}\PY{n}{values}
+        \PY{n}{value\PYZus{}money} \PY{o}{=} \PY{n}{gp\PYZus{}touzi\PYZus{}new\PYZus{}money}\PY{o}{.}\PY{n}{values}
+        
+        \PY{n}{bar} \PY{o}{=} \PY{n}{Bar}\PY{p}{(}\PY{n}{title}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{新注册用户投资金额、投资人数}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{bar}\PY{o}{.}\PY{n}{add}\PY{p}{(}
+            \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{投资额}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+            \PY{n}{attr}\PY{p}{,}
+            \PY{n}{value\PYZus{}money}\PY{p}{,}
+            \PY{n}{yaxis\PYZus{}formatter}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ 元}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+        \PY{p}{)}
+        
+        \PY{n}{line} \PY{o}{=} \PY{n}{Line}\PY{p}{(}\PY{p}{)}
+        \PY{n}{line}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{投资人数}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{attr}\PY{p}{,} \PY{n}{value\PYZus{}renshu}\PY{p}{,} \PY{n}{yaxis\PYZus{}formatter}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ 人}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        
+        \PY{n}{overlap} \PY{o}{=} \PY{n}{Overlap}\PY{p}{(}\PY{n}{width}\PY{o}{=}\PY{l+m+mi}{900}\PY{p}{)}
+        \PY{n}{overlap}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{bar}\PY{p}{)}
+        \PY{n}{overlap}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{line}\PY{p}{,} \PY{n}{is\PYZus{}add\PYZus{}yaxis}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{yaxis\PYZus{}index}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+        \PY{n}{overlap}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}9}]:} <pyecharts.custom.overlap.Overlap at 0x502ef98>
+\end{Verbatim}
+            
+    4.2、投资标期限
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{gp\PYZus{}touzi\PYZus{}new\PYZus{}qixian} \PY{o}{=} \PY{n}{df\PYZus{}touzi\PYZus{}new}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{计划期限}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{总投资金额}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{截至 }\PY{l+s+si}{\PYZob{}0\PYZcb{}}\PY{l+s+s1}{ :}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{1月标累计投资额  }\PY{l+s+si}{\PYZob{}1\PYZcb{}}\PY{l+s+s1}{ 元，}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{3月标累计投资额  }\PY{l+s+si}{\PYZob{}2\PYZcb{}}\PY{l+s+s1}{ 元，}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{6月标累计投资额  }\PY{l+s+si}{\PYZob{}3\PYZcb{}}\PY{l+s+s1}{ 元，}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{12月标累计投资额 }\PY{l+s+si}{\PYZob{}4\PYZcb{}}\PY{l+s+s1}{ 元。}\PY{l+s+s1}{\PYZsq{}}
+               \PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{yesterday}\PY{o}{.}\PY{n}{strftime}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{m\PYZhy{}}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+                       \PY{n}{gp\PYZus{}touzi\PYZus{}new\PYZus{}qixian}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{1月}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}
+                       \PY{n}{gp\PYZus{}touzi\PYZus{}new\PYZus{}qixian}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{3月}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}
+                       \PY{n}{gp\PYZus{}touzi\PYZus{}new\PYZus{}qixian}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{6月}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}
+                       \PY{n}{gp\PYZus{}touzi\PYZus{}new\PYZus{}qixian}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{12月}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+截至 09-05 :
+1月标累计投资额  33000.0 元，
+3月标累计投资额  8600.0 元，
+6月标累计投资额  14200.0 元，
+12月标累计投资额 32000.0 元。
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{attr\PYZus{}pie} \PY{o}{=} \PY{n}{gp\PYZus{}touzi\PYZus{}new\PYZus{}qixian}\PY{o}{.}\PY{n}{index}
+         \PY{n}{value\PYZus{}pie} \PY{o}{=} \PY{n}{gp\PYZus{}touzi\PYZus{}new\PYZus{}qixian}\PY{o}{.}\PY{n}{values}
+         \PY{n}{pie} \PY{o}{=} \PY{n}{Pie}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{新注册用户 当月投资期限 比例}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{title\PYZus{}pos}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{width}\PY{o}{=}\PY{l+m+mi}{900}\PY{p}{)}
+         \PY{n}{pie}\PY{o}{.}\PY{n}{add}\PY{p}{(}
+             \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{投资额}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+             \PY{n}{attr\PYZus{}pie}\PY{p}{,}
+             \PY{n}{value\PYZus{}pie}\PY{p}{,}
+             \PY{n}{radius}\PY{o}{=}\PY{p}{[}\PY{l+m+mi}{30}\PY{p}{,} \PY{l+m+mi}{75}\PY{p}{]}\PY{p}{,}
+             \PY{n}{rosetype}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{area}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+             \PY{n}{is\PYZus{}legend\PYZus{}show}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,}
+             \PY{n}{is\PYZus{}label\PYZus{}show}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}
+         \PY{p}{)}
+         \PY{n}{pie}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:} <pyecharts.charts.pie.Pie at 0x472d780>
+\end{Verbatim}
+            
+    \section{二、投资统计}\label{ux4e8cux6295ux8d44ux7edfux8ba1}
+
+    \subsubsection{1、每日投资统计}\label{ux6bcfux65e5ux6295ux8d44ux7edfux8ba1}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{df\PYZus{}touzi} \PY{o}{=} \PY{n}{df\PYZus{}touzi}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+         \PY{n}{df\PYZus{}touzi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资日期}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{to\PYZus{}datetime}\PY{p}{(}\PY{n}{df\PYZus{}touzi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资时间}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{dt}\PY{o}{.}\PY{n}{strftime}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{m\PYZhy{}}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{gp\PYZus{}touzi\PYZus{}money} \PY{o}{=} \PY{n}{df\PYZus{}touzi}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资日期}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{总投资金额}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{df\PYZus{}touzi\PYZus{}pp} \PY{o}{=} \PY{n}{df\PYZus{}touzi}\PY{o}{.}\PY{n}{drop\PYZus{}duplicates}\PY{p}{(}\PY{n}{subset}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{用户名}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资日期}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{gp\PYZus{}touzi\PYZus{}pp} \PY{o}{=} \PY{n}{df\PYZus{}touzi\PYZus{}pp}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资日期}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{用户名}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{截至 }\PY{l+s+si}{\PYZob{}0\PYZcb{}}\PY{l+s+s1}{ ,本月累计投资金额 }\PY{l+s+si}{\PYZob{}1\PYZcb{}}\PY{l+s+s1}{ 元，累计投资 }\PY{l+s+si}{\PYZob{}2\PYZcb{}}\PY{l+s+s1}{ 人。}\PY{l+s+s1}{\PYZsq{}}
+               \PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{yesterday}\PY{o}{.}\PY{n}{strftime}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{m\PYZhy{}}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+                       \PY{n}{gp\PYZus{}touzi\PYZus{}money}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{,}
+                       \PY{n}{df\PYZus{}touzi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{用户名}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{nunique}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+截至 09-05 ,本月累计投资金额 9551400.0 元，累计投资 660 人。
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{c+c1}{\PYZsh{} from pyecharts import Overlap, Bar, Line}
+         
+         \PY{n}{attr} \PY{o}{=} \PY{n}{gp\PYZus{}touzi\PYZus{}money}\PY{o}{.}\PY{n}{index}
+         \PY{n}{value\PYZus{}pp} \PY{o}{=} \PY{n}{gp\PYZus{}touzi\PYZus{}pp}\PY{o}{.}\PY{n}{values}
+         \PY{n}{value\PYZus{}money} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{around}\PY{p}{(}\PY{n}{gp\PYZus{}touzi\PYZus{}money}\PY{o}{.}\PY{n}{values} \PY{o}{/} \PY{l+m+mi}{10000}\PY{p}{)}
+         
+         \PY{n}{bar} \PY{o}{=} \PY{n}{Bar}\PY{p}{(}\PY{n}{title}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{每日投资}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{bar}\PY{o}{.}\PY{n}{add}\PY{p}{(}
+             \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{投资额}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+             \PY{n}{attr}\PY{p}{,}
+             \PY{n}{value\PYZus{}money}\PY{p}{,}
+             \PY{n}{yaxis\PYZus{}formatter}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ 万元}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+             \PY{n}{mark\PYZus{}line}\PY{o}{=}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{average}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}
+             \PY{n}{mark\PYZus{}point}\PY{o}{=}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{max}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{min}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+         \PY{p}{)}
+         
+         \PY{n}{line} \PY{o}{=} \PY{n}{Line}\PY{p}{(}\PY{p}{)}
+         \PY{n}{line}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{投资人数}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} 
+                  \PY{n}{attr}\PY{p}{,} 
+                  \PY{n}{value\PYZus{}pp}\PY{p}{,}
+                  \PY{n}{yaxis\PYZus{}formatter}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ 人}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                  \PY{n}{mark\PYZus{}point}\PY{o}{=}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{max}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{min}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{overlap} \PY{o}{=} \PY{n}{Overlap}\PY{p}{(}\PY{n}{width}\PY{o}{=}\PY{l+m+mi}{900}\PY{p}{)}
+         \PY{n}{overlap}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{bar}\PY{p}{)}
+         \PY{n}{overlap}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{line}\PY{p}{,} \PY{n}{is\PYZus{}add\PYZus{}yaxis}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{yaxis\PYZus{}index}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{overlap}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}13}]:} <pyecharts.custom.overlap.Overlap at 0x881fa20>
+\end{Verbatim}
+            
+    \subsubsection{2、各期限标投资统计}\label{ux5404ux671fux9650ux6807ux6295ux8d44ux7edfux8ba1}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{gp\PYZus{}touzi\PYZus{}1} \PY{o}{=} \PY{n}{df\PYZus{}touzi}\PY{p}{[}\PY{n}{df\PYZus{}touzi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{计划期限}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{1月}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资日期}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{总投资金额}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+         \PY{n}{gp\PYZus{}touzi\PYZus{}3} \PY{o}{=} \PY{n}{df\PYZus{}touzi}\PY{p}{[}\PY{n}{df\PYZus{}touzi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{计划期限}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{3月}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资日期}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{总投资金额}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+         \PY{n}{gp\PYZus{}touzi\PYZus{}6} \PY{o}{=} \PY{n}{df\PYZus{}touzi}\PY{p}{[}\PY{n}{df\PYZus{}touzi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{计划期限}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{6月}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资日期}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{总投资金额}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+         \PY{n}{gp\PYZus{}touzi\PYZus{}12} \PY{o}{=} \PY{n}{df\PYZus{}touzi}\PY{p}{[}\PY{n}{df\PYZus{}touzi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{计划期限}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{12月}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资日期}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{总投资金额}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{df\PYZus{}touzi\PYZus{}1} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{gp\PYZus{}touzi\PYZus{}1}\PY{o}{.}\PY{n}{values}\PY{p}{,}\PY{n}{index}\PY{o}{=}\PY{n}{zhuce\PYZus{}num}\PY{o}{.}\PY{n}{index}\PY{p}{,}\PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资额}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{fillna}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{df\PYZus{}touzi\PYZus{}3} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{gp\PYZus{}touzi\PYZus{}3}\PY{o}{.}\PY{n}{values}\PY{p}{,}\PY{n}{index}\PY{o}{=}\PY{n}{zhuce\PYZus{}num}\PY{o}{.}\PY{n}{index}\PY{p}{,}\PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资额}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{fillna}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{df\PYZus{}touzi\PYZus{}6} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{gp\PYZus{}touzi\PYZus{}6}\PY{o}{.}\PY{n}{values}\PY{p}{,}\PY{n}{index}\PY{o}{=}\PY{n}{zhuce\PYZus{}num}\PY{o}{.}\PY{n}{index}\PY{p}{,}\PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资额}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{fillna}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{df\PYZus{}touzi\PYZus{}12} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{gp\PYZus{}touzi\PYZus{}12}\PY{o}{.}\PY{n}{values}\PY{p}{,}\PY{n}{index}\PY{o}{=}\PY{n}{zhuce\PYZus{}num}\PY{o}{.}\PY{n}{index}\PY{p}{,}\PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资额}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{fillna}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{截至 }\PY{l+s+si}{\PYZob{}0\PYZcb{}}\PY{l+s+s1}{ :}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{1月标累计投资额  }\PY{l+s+si}{\PYZob{}1\PYZcb{}}\PY{l+s+s1}{ 元，}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{3月标累计投资额  }\PY{l+s+si}{\PYZob{}2\PYZcb{}}\PY{l+s+s1}{ 元，}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{6月标累计投资额  }\PY{l+s+si}{\PYZob{}3\PYZcb{}}\PY{l+s+s1}{ 元，}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{12月标累计投资额 }\PY{l+s+si}{\PYZob{}4\PYZcb{}}\PY{l+s+s1}{ 元。}\PY{l+s+s1}{\PYZsq{}}
+               \PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{yesterday}\PY{o}{.}\PY{n}{strftime}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{m\PYZhy{}}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+                       \PY{n}{df\PYZus{}touzi\PYZus{}1}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资额}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{,}
+                       \PY{n}{df\PYZus{}touzi\PYZus{}3}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资额}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{,}
+                       \PY{n}{df\PYZus{}touzi\PYZus{}6}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资额}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{,}
+                       \PY{n}{df\PYZus{}touzi\PYZus{}12}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资额}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+截至 09-05 :
+1月标累计投资额  3020400.0 元，
+3月标累计投资额  2154700.0 元，
+6月标累计投资额  1722300.0 元，
+12月标累计投资额 2654000.0 元。
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{c+c1}{\PYZsh{} from pyecharts import Bar}
+         
+         \PY{n}{attr} \PY{o}{=} \PY{n}{zhuce\PYZus{}num}\PY{o}{.}\PY{n}{index}
+         \PY{n}{v1} \PY{o}{=} \PY{n}{df\PYZus{}touzi\PYZus{}1}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资额}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{values}
+         \PY{n}{v2} \PY{o}{=} \PY{n}{df\PYZus{}touzi\PYZus{}3}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资额}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{values}
+         \PY{n}{v3} \PY{o}{=} \PY{n}{df\PYZus{}touzi\PYZus{}6}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资额}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{values}
+         \PY{n}{v4} \PY{o}{=} \PY{n}{df\PYZus{}touzi\PYZus{}12}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资额}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{values}
+         
+         \PY{n}{bar} \PY{o}{=} \PY{n}{Bar}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{各期限标投资额}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{width}\PY{o}{=}\PY{l+m+mi}{900}\PY{p}{)}
+         \PY{n}{bar}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{1月标}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{attr}\PY{p}{,} \PY{n}{v1}\PY{p}{,} \PY{n}{is\PYZus{}stack}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{bar}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{3月标}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{attr}\PY{p}{,} \PY{n}{v2}\PY{p}{,} \PY{n}{is\PYZus{}stack}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{bar}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{6月标}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{attr}\PY{p}{,} \PY{n}{v3}\PY{p}{,} \PY{n}{is\PYZus{}stack}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{bar}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{12月标}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{attr}\PY{p}{,} \PY{n}{v4}\PY{p}{,} \PY{n}{is\PYZus{}stack}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         
+         \PY{n}{bar}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}15}]:} <pyecharts.charts.bar.Bar at 0x472d438>
+\end{Verbatim}
+            
+    \subsubsection{3、本月VIP投资统计}\label{ux672cux6708vipux6295ux8d44ux7edfux8ba1}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{gp\PYZus{}touzi\PYZus{}vip} \PY{o}{=} \PY{n}{df\PYZus{}touzi}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投资时VIP等级}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{总投资金额}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} from pyecharts import Grid}
+         
+         \PY{n}{attr\PYZus{}vip} \PY{o}{=} \PY{n}{gp\PYZus{}touzi\PYZus{}vip}\PY{o}{.}\PY{n}{index}
+         \PY{n}{value\PYZus{}vip} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{around}\PY{p}{(}\PY{n}{gp\PYZus{}touzi\PYZus{}vip}\PY{o}{.}\PY{n}{values} \PY{o}{/} \PY{l+m+mi}{10000}\PY{p}{)}
+         
+         \PY{n}{bar} \PY{o}{=} \PY{n}{Bar}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{VIP投资额}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{width}\PY{o}{=}\PY{l+m+mi}{900}\PY{p}{)}
+         \PY{n}{bar}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{投资额}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                 \PY{n}{attr\PYZus{}vip}\PY{p}{,}
+                 \PY{n}{value\PYZus{}vip}\PY{p}{,}
+                 \PY{n}{mark\PYZus{}point}\PY{o}{=}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{min}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{max}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}
+                 \PY{n}{yaxis\PYZus{}formatter}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ 万元}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                 \PY{n}{is\PYZus{}legend\PYZus{}show}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,}
+                 \PY{p}{)}
+         
+         \PY{n}{pie} \PY{o}{=} \PY{n}{Pie}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{投资比例}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{title\PYZus{}pos}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{55}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{pie}\PY{o}{.}\PY{n}{add}\PY{p}{(}
+             \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+             \PY{n}{attr\PYZus{}vip}\PY{p}{,}
+             \PY{n}{value\PYZus{}vip}\PY{p}{,}
+             \PY{n}{radius}\PY{o}{=}\PY{p}{[}\PY{l+m+mi}{45}\PY{p}{,} \PY{l+m+mi}{65}\PY{p}{]}\PY{p}{,}
+             \PY{n}{center}\PY{o}{=}\PY{p}{[}\PY{l+m+mi}{65}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{]}\PY{p}{,}
+             \PY{n}{legend\PYZus{}pos}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{80}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+             \PY{n}{legend\PYZus{}orient}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{horizontal}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+             \PY{n}{is\PYZus{}label\PYZus{}show}\PY{o}{=}\PY{k+kc}{False}
+         \PY{p}{)}
+         
+         \PY{n}{grid} \PY{o}{=} \PY{n}{Grid}\PY{p}{(}\PY{n}{width}\PY{o}{=}\PY{l+m+mi}{900}\PY{p}{)}
+         \PY{n}{grid}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{bar}\PY{p}{,} \PY{n}{grid\PYZus{}right}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{50}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{grid}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{pie}\PY{p}{)}
+         \PY{n}{grid}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}16}]:} <pyecharts.custom.grid.Grid at 0x87b3550>
+\end{Verbatim}
+            
+    \subsubsection{4、本月券使用情况}\label{ux672cux6708ux5238ux4f7fux7528ux60c5ux51b5}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{df\PYZus{}quan}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{券名称}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df\PYZus{}quan}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{券别名}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:}\PY{n}{re}\PY{o}{.}\PY{n}{sub}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{（}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{d+）\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{gp\PYZus{}quan} \PY{o}{=} \PY{n}{df\PYZus{}quan}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{券名称}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{大类}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{投标金额}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)} 
+         
+         \PY{n}{df\PYZus{}quan\PYZus{}res} \PY{o}{=} \PY{n}{gp\PYZus{}quan}\PY{o}{.}\PY{n}{unstack}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{dropna}\PY{p}{(}\PY{n}{subset}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{加息券}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{抵用券}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}\PY{n}{how}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{all}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{df\PYZus{}quan\PYZus{}res}\PY{o}{.}\PY{n}{fillna}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         
+         \PY{n}{attr} \PY{o}{=} \PY{n}{df\PYZus{}quan\PYZus{}res}\PY{o}{.}\PY{n}{index}
+         \PY{n}{v1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{around}\PY{p}{(}\PY{n}{df\PYZus{}quan\PYZus{}res}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{加息券}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{/} \PY{l+m+mi}{10000}\PY{p}{)}
+         \PY{n}{v2} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{around}\PY{p}{(}\PY{n}{df\PYZus{}quan\PYZus{}res}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{抵用券}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{/} \PY{l+m+mi}{10000}\PY{p}{)}
+         
+         \PY{n}{bar} \PY{o}{=} \PY{n}{Bar}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{券投资额}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{按券名称统计}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{width}\PY{o}{=}\PY{l+m+mi}{900}\PY{p}{)}
+         \PY{n}{bar}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{加息券}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{attr}\PY{p}{,}\PY{n}{v1}\PY{p}{,}\PY{n}{mark\PYZus{}line}\PY{o}{=}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{average}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}\PY{n}{yaxis\PYZus{}formatter}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ 万元}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{xaxis\PYZus{}rotate}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{l+m+mi}{45}\PY{p}{)}
+         \PY{n}{bar}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{抵用券}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{attr}\PY{p}{,}\PY{n}{v2}\PY{p}{,}\PY{n}{mark\PYZus{}line}\PY{o}{=}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{average}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}\PY{n}{yaxis\PYZus{}formatter}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ 万元}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{xaxis\PYZus{}rotate}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{l+m+mi}{45}\PY{p}{)}
+         \PY{n}{bar}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}17}]:} <pyecharts.charts.bar.Bar at 0x881f198>
+\end{Verbatim}
+            
+    \section{三、回款统计}\label{ux4e09ux56deux6b3eux7edfux8ba1}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{n}{attr\PYZus{}hk} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{to\PYZus{}datetime}\PY{p}{(}\PY{n}{df\PYZus{}huikuan}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{回款时间}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{dt}\PY{o}{.}\PY{n}{strftime}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{m\PYZhy{}}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{value\PYZus{}jd\PYZus{}hk} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{around}\PY{p}{(}\PY{n}{df\PYZus{}huikuan}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{经典版}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{/} \PY{l+m+mi}{10000}\PY{p}{)}
+         \PY{n}{value\PYZus{}cg\PYZus{}hk} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{around}\PY{p}{(}\PY{n}{df\PYZus{}huikuan}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{存管版}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{/} \PY{l+m+mi}{10000}\PY{p}{)}
+         
+         \PY{n}{bar} \PY{o}{=} \PY{n}{Bar}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{未来30天回款金额统计}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{width}\PY{o}{=}\PY{l+m+mi}{900}\PY{p}{)}
+         \PY{n}{bar}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{经典版}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{attr\PYZus{}hk}\PY{p}{,} \PY{n}{value\PYZus{}jd\PYZus{}hk}\PY{p}{,} \PY{n}{is\PYZus{}stack}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}\PY{n}{yaxis\PYZus{}formatter}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ 万元}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{bar}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{存管版}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{attr\PYZus{}hk}\PY{p}{,} \PY{n}{value\PYZus{}cg\PYZus{}hk}\PY{p}{,} \PY{n}{is\PYZus{}stack}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}\PY{n}{yaxis\PYZus{}formatter}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ 万元}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         
+         \PY{n}{bar}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}18}]:} <pyecharts.charts.bar.Bar at 0x87b3208>
+\end{Verbatim}
+            
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
