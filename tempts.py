@@ -6121,23 +6121,31 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # ----------------------------------------------------------
 
-df = pd.DataFrame(np.arange(6).reshape(2,3),index = ['a','b'],columns = ['col1','col2','col3'])
+# df = pd.DataFrame(np.arange(6).reshape(2,3),index = ['a','b'],columns = ['col1','col2','col3'])
 
-df = df.reindex(['a','new','b'])
+# df = df.reindex(['a','new','b'])
 
-print(df)
+# print(df)
 
-print(df.isnull().any(axis=1))
+# print('{:*^60}'.format('split_line'))
 
+# print(df.isnull().any(axis=1))
 
+# ----------------------------------------------------------
 
+# import dash_core_components
 
+# print(dash_core_components.__version__)
 
+# ----------------------------------------------------------
 
+s = pd.Series(["String",
+           (1, 2, 3),
+           ["a", "b", "c"],
+           123, -456,
+           {1:"Hello", "2":"World"}])
 
-
-
-
+print(s)
 
 
 
