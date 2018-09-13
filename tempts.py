@@ -6139,17 +6139,35 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # ----------------------------------------------------------
 
-s = pd.Series(["String",
-           (1, 2, 3),
-           ["a", "b", "c"],
-           123, -456,
-           {1:"Hello", "2":"World"}])
+# import time
 
-print(s)
+# start = time.time()
 
+# df = pd.DataFrame({'a':[4,2,1,2,3],
+#                    'b':[5,3,3,1,4]})
 
 
+# df['rank_dense'] = df['b'].rank(method='dense')
+# df['rank_first'] = df['b'].rank(method='first')
+# df['rank_min'] = df['b'].rank(method='min')
+# df['rank_max'] = df['b'].rank(method='max')
 
+# df['group_rank'] = df.groupby('a')['b'].rank(method='dense')
+
+# print(df)
+
+# n = 10
+# i = 2
+# while(n):
+#     i = i+i
+#     n -= 1
+
+# print(i)
+
+# end = time.time()
+# print ('time :',end-start)
+
+# ----------------------------------------------------------
 
 
 
