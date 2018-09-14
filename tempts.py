@@ -6169,9 +6169,30 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # ----------------------------------------------------------
 
+def main():
+    price_now = 8.05
+    cost = 900 * 24.546
+    y1 = []
+    y2 = []
+
+    for i in range(100,15000,10):
+        price = (cost + i * price_now) / (900 + i)
+        money = i * price_now
+        y1.append(money)
+        y2.append(price)
+        print('when invest {0:.0f} , the new price is {1:.2f} '.format(money,price))
+
+    df = pd.DataFrame({'money':y1,'price':y2})
+
+
+    plt.plot(df.money, df.price, '-r')
+
+    plt.show()  
 
 
 
+if __name__ == '__main__':
+    main()
 
 
 
