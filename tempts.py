@@ -6194,16 +6194,30 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # ----------------------------------------------------------
 
+df = pd.DataFrame(np.arange(6).reshape(2,3),index = ['a','b'],columns = ['col1','col2','col3'])
+print(df,'\n')
 
+# for i , j in df.iterrows():
+#     print('i:',i)
+#     print('j:',j,'\n')
 
+# for x in df.iterrows():
+#     print('x:',x)
+#     print('type_x:',type(x),'\n')
 
+# a = tuple(range(1000))
+# b = list(range(1000))
 
+# print(a.__sizeof__()) # 8024
+# print(b.__sizeof__()) # 9088
 
+a    = (1,2)
+# b    = [1,2] 
 
+c = {a: 1}     # OK
+# c = {b: 1}     # Error
 
-
-
-
+print(c)
 
 
 
