@@ -6194,8 +6194,8 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # ----------------------------------------------------------
 
-df = pd.DataFrame(np.arange(6).reshape(2,3),index = ['a','b'],columns = ['col1','col2','col3'])
-print(df,'\n')
+# df = pd.DataFrame(np.arange(6).reshape(2,3),index = ['a','b'],columns = ['col1','col2','col3'])
+# print(df,'\n')
 
 # for i , j in df.iterrows():
 #     print('i:',i)
@@ -6211,30 +6211,289 @@ print(df,'\n')
 # print(a.__sizeof__()) # 8024
 # print(b.__sizeof__()) # 9088
 
-a    = (1,2)
-# b    = [1,2] 
+# a    = (1,2)
+# # b    = [1,2] 
 
-c = {a: 1}     # OK
-# c = {b: 1}     # Error
+# c = {a: 1}     # OK
+# # c = {b: 1}     # Error
 
-print(c)
+# print(c)
 
-
-
-
-
-
+# num = input(":")
+# if float(num) < 0:
+#     raise ValueError("Negative!")
 
 
+# try:
+#     # num = 5 / 0
+#     print(n)
+# except:
+#     print("An error occurred")
+#     raise ValueError
+
+# temp = 10
+# assert (temp >= 0), "Colder than absolute zero!"
+
+# file = open("newfile.txt", "w")
+# file.write("This has been written to a file")
+# file.close()
+
+# file = open("newfile.txt", "r")
+# print(file.read())
+# file.close()
+
+# try:
+#    f = open("newfile.txt")
+#    print(f.read())
+# finally:
+#    f.close()
+
+# print (print(1))
+
+
+# nums = [55, 44, 33, 22, 11]
+
+# if all([i > 5 for i in nums]):
+#    print("All larger than 5")
+
+# if any([i % 2 == 0 for i in nums]):
+#    print("At least one is even")
+
+# def counts(text,char):
+#     count = 0
+#     for i in text:
+#         if i == char:
+#             count += 1
+    
+#     return count
+
+# with open('newfile.txt') as f:
+#     text = f.read()
+
+# # print(counts(text,'o'))
+
+# for char in "abcdefghijklmnopqrstuvwxyz":
+#   perc = 100 * counts(text, char) / len(text)
+#   print("{0} - {1}%".format(char, round(perc, 2)))
+
+# print((lambda x: x**2 + 5*x + 4) (4))
+
+# def numbers(x):
+#   for i in range(x):
+#     if i % 2 == 0:
+#       yield i
+
+# print(list(numbers(11)))
+
+# def decor(func):
+#   def wrap():
+#     print("============")
+#     func()
+#     print("============")
+#   return wrap
+
+# @decor
+# def print_text():
+#   print("Hello world!")
+
+# print_text()
+
+# # decorated = decor(print_text)
+# # decorated()
+
+# print(@decor)
 
 
 
+# f = now
+# f()
 
+# def log(func):
+#     def wrapper():
+#         print ('call %s():' % func.__name__)
+#         func()
+#     return wrapper
 
+# @log
+# def now():
+#     print ('2013-12-25')
 
+# now()
 
+# def j(x):
+#     if x > 0:
+#         return j(x) * j(x-1)
+    
+# j(5)
 
+# def factorial(x):
+#   if x == 1:
+#     return 1
+#   else: 
+#     return x * factorial(x-1)
+    
+# print(factorial(5))
 
+# def fib(x):
+#   if x == 0 or x == 1:
+#     return 1
+#   else: 
+#     return fib(x-1) + fib(x-2)
+# print(fib(4))
 
+# first = {1, 2, 3, 4, 5, 6}
+# second = {4, 5, 6, 7, 8, 9}
 
+# print(first | second)
+# print(first & second)
+# print(first - second)
+# print(second - first)
+# print(first ^ second)
 
+# from itertools import takewhile
+# nums = [2, 4, 6, 7, 9, 8]
+# a = takewhile(lambda x: x%2==0, nums)
+# print(list(a))
+# print(list(filter(lambda x: x%2==0, nums)))
+
+# from itertools import product, permutations
+
+# letters = ("A", "B")
+# print(list(product(letters, range(2))))
+# print(list(permutations(letters))) 
+
+# class Dog:
+#   def __init__(self, name, color):
+#       self.name = name
+#       self.color = color
+
+#   def bark(self):
+#       print(self.color)
+#       print("Woof!")
+
+# fido = Dog("Fido", "brown")
+# print(fido.name)
+# fido.bark()
+
+# class Animal: 
+#   def __init__(self, name, color):
+#     self.name = name
+#     self.color = color
+
+# class Cat(Animal):
+#   def purr(self):
+#     print("Purr...")
+        
+# class Dog(Animal):
+#   def bark(self):
+#     print("Woof!")
+
+# fido = Dog("Fido", "brown")
+# print(fido.color)
+# fido.bark()
+
+# class A:
+#   def method(self):
+#     print("A method")
+    
+# class B(A):
+#   def another_method(self):
+#     print("B method")
+    
+# class C(B):
+#   def third_method(self):
+#     print("C method")
+    
+# c = C()
+# c.method()
+# c.another_method()
+# c.third_method()
+
+# class A:
+#   def spam(self):
+#     print(1)
+
+# class B(A):
+#   def spam(self):
+#     print(2)
+#     A().spam()
+            
+# B().spam()
+
+# class Vector2D:
+#   def __init__(self, x, y):
+#     self.x = x
+#     self.y = y
+#   def ad(self, other):
+#     return Vector2D(self.x + other.x, self.y + other.y)
+
+# first = Vector2D(5, 7)
+# second = Vector2D(3, 9)
+# result = Vector2D.ad(first + second)
+# print(result.x)
+# print(result.y)
+
+# class SpecialString:
+#   def __init__(self, cont):
+#     self.cont = cont
+
+#   def __add__(self, other):
+#     line = "=" * len(other.cont)
+#     return "\n".join([self.cont, line, other.cont])
+
+# spam = SpecialString("spam")
+# hello = SpecialString("Hello world!")
+# print(spam + hello)
+
+# class SpecialString:
+#   def __init__(self, cont):
+#     self.cont = cont
+
+#   def __gt__(self, other):
+#     for index in range(len(other.cont)+1):
+#       result = other.cont[:index] + ">" + self.cont
+#       result += ">" + other.cont[index:]
+#       print(result)
+
+# spam = SpecialString("spam")
+# eggs = SpecialString("eggs")
+# spam > eggs
+
+# import random
+
+# class VagueList:
+#   def __init__(self, cont):
+#     self.cont = cont
+
+#   def __getitem__(self, index):
+#     return self.cont[index + random.randint(-1, 1)]
+
+#   def __len__(self):
+#     return random.randint(0, len(self.cont)*2)
+
+# vague_list = VagueList(["A", "B", "C", "D", "E"])
+# print(len(vague_list))
+# print(len(vague_list))
+# print(vague_list[2])
+# print(vague_list[2])
+
+class Queue:
+  def __init__(self, contents):
+    self._hiddenlist = list(contents)
+
+  def push(self, value):
+    self._hiddenlist.insert(0, value)
+   
+  def pop(self):
+    return self._hiddenlist.pop(-1)
+
+  def __repr__(self):
+    return "Queue({})".format(self._hiddenlist)
+
+queue = Queue([1, 2, 3])
+print(queue)
+queue.push(0)
+print(queue)
+queue.pop()
+print(queue)
+print(queue._hiddenlist)

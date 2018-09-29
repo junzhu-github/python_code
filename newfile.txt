@@ -1,0 +1,9 @@
+This has been written to a file
+
+# hello
+
+# i'm home coding
+
+### note
+
+time_gap_percent = time_gap.value_counts(normalize = True)
