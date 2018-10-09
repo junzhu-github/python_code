@@ -6602,11 +6602,26 @@ from mpl_toolkits.mplot3d import Axes3D
 # while True:
 #   get_input()
 
-def use_logging(func):
-    logging.warn("%s is running" % func.__name__)
-    func()
+# def use_logging(func):
+#     logging.warn("%s is running" % func.__name__)
+#     func()
 
-def foo():
-    print('i am foo')
+# def foo():
+#     print('i am foo')
 
-use_logging(foo)
+# use_logging(foo)
+
+data = {'Name':['Tom','James','Ricky','Vin','Steve','Minsu','Jack'],
+        'Age':[25,26,25,23,30,29,23],
+        'Rating':[4.23,3.24,3.98,2.56,3.20,4.6,3.8]
+        }
+
+df = pd.DataFrame(data)
+
+print(df)
+
+print('='*10)
+print(df['Age'].value_counts())
+
+print('='*10)
+print(df['Age'].value_counts(normalize=True))
