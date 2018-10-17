@@ -21,10 +21,10 @@ with pd.ExcelFile(r'D:\小鸡理财\百度云同步盘\小鸡理财\每日数据
 # - 导入已派券名单
 df_rcd = pd.read_excel(r'D:\小鸡理财\百度云同步盘\小鸡理财\每日数据\派券\已派券记录.xlsx')
 
-print('import_ok!')
+print('import_ok!\n')
 
-import_time = time.time()
-print('import_time:{} s\n'.format(import_time-start))
+# import_time = time.time()
+# print('import_time:{} s\n'.format(import_time-start))
 
 # - 合并回款表
 df_hk = df_jd_bj.append([df_jd_lx,df_cg], ignore_index=True,sort=True)
@@ -33,10 +33,10 @@ df_hk = df_jd_bj.append([df_jd_lx,df_cg], ignore_index=True,sort=True)
 df_hk['发放时间'] = pd.to_datetime(df_hk['预计本次发放时间'])
 del df_hk['预计本次发放时间']
 
-print('clean_ok!')
+print('clean_ok!\n')
 
-clean_time = time.time()
-print('clean_time:{} s\n'.format(clean_time-import_time))
+# clean_time = time.time()
+# print('clean_time:{} s\n'.format(clean_time-import_time))
 
 dtnow = pd.to_datetime('today')
 day_of_week = dtnow.day_name()
@@ -65,33 +65,6 @@ else:
 	dt_ff = dtnow + timediff
 	dt_ff = dt_ff.strftime('%Y-%m-%d')
 	df_hk_today = df_hk[(df_hk['发放时间'] == dt_ff)]
-
-# 周一回款
-# dtnow = pd.to_datetime('today')
-# timediff = pd.Timedelta(0,unit='d')
-# dt_ff = dtnow + timediff
-# dt_ff = dt_ff.strftime('%Y-%m-%d')
-# df_hk_today = df_hk[(df_hk['发放时间'] == dt_ff)]
-
-# 周二-周四回款
-# dtnow = pd.to_datetime('today')
-# timediff = pd.Timedelta(1,unit='d')
-# dt_ff = dtnow + timediff
-# dt_ff = dt_ff.strftime('%Y-%m-%d')
-# df_hk_today = df_hk[(df_hk['发放时间'] == dt_ff)]
-
-# 周五版筛选回款
-# dtnow = pd.to_datetime('today')
-# # ---
-# timediff = pd.Timedelta(-1,unit='d')
-# dt_ff_1 = dtnow + timediff
-# dt_ff_1 = dt_ff_1.strftime('%Y-%m-%d')
-# # ---
-# timediff = pd.Timedelta(0,unit='d')
-# dt_ff_2 = dtnow + timediff
-# dt_ff_2 = dt_ff_2.strftime('%Y-%m-%d')
-# df_hk_today = df_hk[(df_hk['发放时间'] == dt_ff_1) | (df_hk['发放时间'] == dt_ff_2)]
-# dt_ff = '周末'
 
 #归类
 class_pai = dict({'6月标':'派券2',
@@ -124,10 +97,10 @@ gp_rcd = df_rcd.groupby('会员名',as_index=False)['mark'].sum()
 p3 = gp_rcd[gp_rcd['mark'] > 2]
 df_hk_today_res_3 = df_hk_today_res_2[~df_hk_today_res_2['会员名'].isin(p3['会员名'])]
 
-print('filter_ok!')
+print('filter_ok!\n')
 
-filter_time = time.time()
-print('filter_time:{} s\n'.format(filter_time-clean_time))
+# filter_time = time.time()
+# print('filter_time:{} s\n'.format(filter_time-clean_time))
 
 # - 确定要派哪类券
 gp_class = df_hk_today_res_3.groupby(['会员名','真实姓名','分类'])['本次发放金额'].sum().unstack()
@@ -138,10 +111,10 @@ if len(gp_class.columns) == 1:
 else:
 	gp_class['派券分类'] = np.where(gp_class['派券1'] > gp_class['派券2'],'派券1','派券2')
 
-print('class_ok!')
+print('class_ok!\n')
 
-class_time = time.time()
-print('class_time:{} s\n'.format(class_time-filter_time))
+# class_time = time.time()
+# print('class_time:{} s\n'.format(class_time-filter_time))
 
 # - 查找用户名等信息
 res_temp = gp_class.copy()
@@ -159,9 +132,9 @@ df_record = df_x.to_frame()
 # df_record.head()
 df_record.to_excel('已派券记录.xlsx',index=False)
 
-print('write_ok!')
+print('write_ok!\n')
 
 write_time = time.time()
-print('write_time::{} s\n'.format(write_time-class_time))
+# print('write_time::{} s\n'.format(write_time-class_time))
 
-print('ALL IS DONE!,TOTAL COST TIME:{} s\n'.format(write_time-start))
+print('all done!,total cost: {:.2f} s\n'.format(write_time-start))
