@@ -51,5 +51,7 @@ letters = ("A", "B")
 print(list(product(letters, range(2))))
 print(list(permutations(letters))) 
 
-i[photo_test](D:\OneDrive\python\python_code\pic\1.png)
+i[photo_test](https://raw.githubusercontent.com/junzhu-github/python_code/master/pic/1.png)
+
+i[photo_test](pic/1.png)
 
