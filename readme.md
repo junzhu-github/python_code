@@ -50,3 +50,6 @@ from itertools import product, permutations
 letters = ("A", "B")
 print(list(product(letters, range(2))))
 print(list(permutations(letters))) 
+
+i[photo_test](D:\OneDrive\python\python_code\pic\1.png)
+
