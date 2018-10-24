@@ -6611,17 +6611,54 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # use_logging(foo)
 
-data = {'Name':['Tom','James','Ricky','Vin','Steve','Minsu','Jack'],
-        'Age':[25,26,25,23,30,29,23],
-        'Rating':[4.23,3.24,3.98,2.56,3.20,4.6,3.8]
-        }
+# data = {'Name':['Tom','James','Ricky','Vin','Steve','Minsu','Jack'],
+#         'Age':[25,26,25,23,30,29,23],
+#         'Rating':[4.23,3.24,3.98,2.56,3.20,4.6,3.8]
+#         }
 
-df = pd.DataFrame(data)
+# df = pd.DataFrame(data)
 
-print(df)
+# print(df)
 
-print('='*10)
-print(df['Age'].value_counts())
+# print('='*10)
+# print(df['Age'].value_counts())
 
-print('='*10)
-print(df['Age'].value_counts(normalize=True))
+# print('='*10)
+# print(df['Age'].value_counts(normalize=True))
+
+# %%timeit print('''
+# 今天在向数据库里面导入数据时，发现cvs文件竟然有180M，
+# 用sqlserver自带的导入工具导了十几分钟，大概导入了百分之二，
+# 而且会出现很多数据类型不匹配（还不知道什么原因，后面把所有类型的长度都加长了），
+# 于是放弃了sqlserver自带的导入工具。
+# ''')
+
+# import timeit
+
+# num = 1
+# s = timeit.timeit('"-".join(str(n) for n in range(100))', number=num)
+# print('time:{:.10f} s'.format(s / num) )
+
+# n = 5
+# with open(r'C:\Users\Xiaoji\Desktop\NisLog.txt') as f:
+#     for line in f:
+#         if n:
+#             print(line.split('f'))
+#             print('='*50)
+#             n -= 1
+
+import pandas as pd
+
+reader = pd.read_csv(r'D:\VDownload\NYC Yellow Taxi data\yellow_tripdata_2017-08.csv', iterator=True)
+
+loop = True
+chunkSize = 10000
+chunks = []
+while loop:
+    try:
+        chunk = reader.get_chunk(chunkSize)
+        chunks.append(chunk)
+    except StopIteration:
+        loop = False
+        print ("Iteration is stopped.")
+df = pd.concat(chunks, ignore_index=True)
