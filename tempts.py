@@ -6649,7 +6649,7 @@ from mpl_toolkits.mplot3d import Axes3D
 
 import pandas as pd
 
-reader = pd.read_csv(r'D:\VDownload\NYC Yellow Taxi data\yellow_tripdata_2017-08.csv', iterator=True)
+reader = pd.read_csv(r'D:\VDownload\NYC Yellow Taxi data\green_tripdata_2013-08_2.csv', iterator=True)
 
 loop = True
 chunkSize = 10000

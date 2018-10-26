@@ -3,6 +3,7 @@
 # i'm home coding
 
 ### note
+
  # assert function
  def my_func(x):
  	assert x > 0, "Error!"
@@ -58,3 +59,14 @@ print(list(permutations(letters)))
 ----------------------------------------
 
 ![a](https://github.com/junzhu-github/python_code/blob/master/pic/1.png?raw=true)
+
+LOAD DATA LOCAL INFILE 'C:\\Users\\Xiaoji\\Desktop\\green_tripdata_2013-08_2.csv' INTO TABLE green_tripdata
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"' 
+LINES TERMINATED BY '\r\n'
+IGNORE 1 LINES;
+
+CREATE TABLE IF NOT EXISTS `runoob_tbl`(
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+___
