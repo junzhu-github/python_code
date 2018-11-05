@@ -4,6 +4,7 @@
 
 
 import os
+import re
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -6647,18 +6648,21 @@ from mpl_toolkits.mplot3d import Axes3D
 #             print('='*50)
 #             n -= 1
 
-import pandas as pd
+# import pandas as pd
 
-reader = pd.read_csv(r'D:\VDownload\NYC Yellow Taxi data\green_tripdata_2013-08_2.csv', iterator=True)
+# reader = pd.read_csv(r'D:\VDownload\NYC Yellow Taxi data\green_tripdata_2013-08_2.csv', iterator=True)
 
-loop = True
-chunkSize = 10000
-chunks = []
-while loop:
-    try:
-        chunk = reader.get_chunk(chunkSize)
-        chunks.append(chunk)
-    except StopIteration:
-        loop = False
-        print ("Iteration is stopped.")
-df = pd.concat(chunks, ignore_index=True)
+# loop = True
+# chunkSize = 10000
+# chunks = []
+# while loop:
+#     try:
+#         chunk = reader.get_chunk(chunkSize)
+#         chunks.append(chunk)
+#     except StopIteration:
+#         loop = False
+#         print ("Iteration is stopped.")
+# df = pd.concat(chunks, ignore_index=True)
+
+m = re.findall(r"r[ua]n", "run ran ren")
+print(type(m))

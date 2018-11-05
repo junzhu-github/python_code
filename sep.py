@@ -12,7 +12,7 @@ os.chdir(r'D:\小鸡理财\百度云同步盘\小鸡理财\每日数据\派券')
 start = time.time()
 
 # - 导入待派券名单
-with pd.ExcelFile(r'D:\小鸡理财\百度云同步盘\小鸡理财\每日数据\派券\10月派券.xlsx') as xlsx:
+with pd.ExcelFile(r'D:\小鸡理财\百度云同步盘\小鸡理财\每日数据\派券\11月派券.xlsx') as xlsx:
     df_jd_bj = pd.read_excel(xlsx,'经典本金')
     df_jd_lx = pd.read_excel(xlsx,'经典利息')
     df_cg = pd.read_excel(xlsx,'存管回款')

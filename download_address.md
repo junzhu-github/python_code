@@ -36,7 +36,7 @@
 
 - 还款计划（投资时间：start_time2 & end_time2）（预期发放开始时间：start_time & end_time）（实际发放开始时间：start_time3 & end_time3）
 
-<https://cg.xiaojilicai.com/admin/borrow/repaymentplan?id=&borrow_id=&borrow_name=&borrow_duration=0&status=&username=&realname=&cellphone=&min_money=&max_money=&market_source=&start_time2=2018-01-01&end_time2=2018-01-01&start_time=2018-09-01&end_time=2018-09-01&start_time3=2018-03-01&end_time3=2018-03-01&export=1&__hash__=7111ca15bd54dacc1ebb2f13436210e7_9bce1cc49cbc625a45bd92bd8abcfee3>
+<https://cg.xiaojilicai.com/admin/borrow/repaymentplan?id=&borrow_id=&borrow_name=&borrow_duration=0&status=&username=&realname=&cellphone=&min_money=&max_money=&market_source=&start_time2=2018-10-30&end_time2=2018-10-31&start_time=&end_time=&start_time3=&end_time3=&export=1&__hash__=7111ca15bd54dacc1ebb2f13436210e7_9bce1cc49cbc625a45bd92bd8abcfee3>
 
 ### 券列表
 
