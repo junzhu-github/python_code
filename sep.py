@@ -43,27 +43,30 @@ day_of_week = dtnow.day_name()
 hour_of_day = int(dtnow.hour)
 print('Today is ',day_of_week)
 
-if (day_of_week == 'Monday') & (hour_of_day < 12):
-	print('---1 is choosed!---\n')
-	timediff = pd.Timedelta(0,unit='d')
-	dt_ff = dtnow + timediff
-	dt_ff = dt_ff.strftime('%Y-%m-%d')
-	df_hk_today = df_hk[(df_hk['发放时间'] == dt_ff)]
-elif day_of_week == 'Friday':
-	print('---2 is choosed!---\n')
-	timediff = pd.Timedelta(-1,unit='d')
+if day_of_week == 'Friday':
+	print('---happy 周末 !---\n')
+
+	timediff = pd.Timedelta(1,unit='d')
 	dt_ff_1 = dtnow + timediff
-	dt_ff_1 = dt_ff_1.strftime('%Y-%m-%d')
-	timediff = pd.Timedelta(0,unit='d')
+	dt_ff_1 = dt_ff_1.strftime('%Y.%m.%d')
+
+	timediff = pd.Timedelta(2,unit='d')
 	dt_ff_2 = dtnow + timediff
-	dt_ff_2 = dt_ff_2.strftime('%Y-%m-%d')
-	df_hk_today = df_hk[(df_hk['发放时间'] == dt_ff_1) | (df_hk['发放时间'] == dt_ff_2)]
-	dt_ff = '周末'
+	dt_ff_2 = dt_ff_2.strftime('%Y.%m.%d')
+
+	timediff = pd.Timedelta(3,unit='d')
+	dt_ff_3 = dtnow + timediff
+	dt_ff_3 = dt_ff_3.strftime('%Y.%m.%d')
+
+	df_hk_today = df_hk[(df_hk['发放时间'] == dt_ff_1) | (df_hk['发放时间'] == dt_ff_2) | (df_hk['发放时间'] == dt_ff_3)]
+
+	dt_ff = str(dt_ff_1) + '-' + str(dt_ff_3)
+
 else:
-	print('---3 is choosed!---\n')
+	print('---平时 is choosed!---\n')
 	timediff = pd.Timedelta(1,unit='d')
 	dt_ff = dtnow + timediff
-	dt_ff = dt_ff.strftime('%Y-%m-%d')
+	dt_ff = dt_ff.strftime('%Y.%m.%d')
 	df_hk_today = df_hk[(df_hk['发放时间'] == dt_ff)]
 
 #归类
@@ -78,12 +81,12 @@ df_hk_today = df_hk_today.copy()
 df_hk_today['分类'] = df_hk_today.loc[:,'投资期限'].map(class_pai)
 
 
-# - 合并计算，排除当日回款金额小于1000元
-#排除总金额<1000
+# - 合并计算，排除当日回款金额小于500元
+#排除总金额<500
 gp_hk = df_hk_today.groupby('会员名',as_index=False)['本次发放金额'].sum()
-l1000 = gp_hk[gp_hk['本次发放金额'] >= 1000]['会员名']
-# l1000
-df_hk_today_res_1 = df_hk_today[df_hk_today['会员名'].isin(l1000)]
+l500 = gp_hk[gp_hk['本次发放金额'] >= 500]['会员名']
+# l500
+df_hk_today_res_1 = df_hk_today[df_hk_today['会员名'].isin(l500)]
 
 # - 排除有2张券以上的人
 df_quan['mark'] = 1
@@ -109,7 +112,7 @@ gp_class.fillna(0,inplace=True)
 if len(gp_class.columns) == 1:
 	gp_class['派券分类'] = gp_class.columns[0]
 else:
-	gp_class['派券分类'] = np.where(gp_class['派券1'] > gp_class['派券2'],'派券1','派券2')
+	gp_class['派券分类'] = np.where(gp_class['派券2'] == 0,'派券1','派券2')
 
 print('class_ok!\n')
 
