@@ -21,12 +21,14 @@ with pd.ExcelFile(r'D:\小鸡理财\百度云同步盘\小鸡理财\每日数据
 df_rcd = pd.read_excel(r'D:\小鸡理财\百度云同步盘\小鸡理财\每日数据\派券\已派券记录.xlsx')
 print('派券名单导入完成!\n')
 
-
 # - 合并回款表
 df_hk = df_jd_bj.append([df_jd_lx,df_cg], ignore_index=True,sort=True)
 # - 整理回款表
 df_hk['发放时间'] = pd.to_datetime(df_hk['预计本次发放时间'])
 del df_hk['预计本次发放时间']
+
+# df_hk.to_excel('1212.xlsx')
+# bug
 
 dtnow = pd.to_datetime('today')
 day_of_week = dtnow.day_name()
@@ -73,13 +75,13 @@ hk_pp = df_hk_today['会员名'].nunique()
 hk_money = round(df_hk_today['本次发放金额'].sum() / 10000)
 
 # - 合并计算，排除当日回款金额小于500元
-#排除总金额<500
+#排除总金额<0
 gp_hk = df_hk_today.groupby('会员名',as_index=False)['本次发放金额'].sum()
-l500 = gp_hk[gp_hk['本次发放金额'] >= 500]['会员名']
+l500 = gp_hk[gp_hk['本次发放金额'] >= 0]['会员名']
 # - l500
 df_hk_today_res_1 = df_hk_today[df_hk_today['会员名'].isin(l500)]
 # - 记录回款金额小于500元的人数
-pp_500 = gp_hk[gp_hk['本次发放金额'] < 500]['会员名']
+pp_500 = gp_hk[gp_hk['本次发放金额'] < 0]['会员名']
 pp_500_num = len(pp_500)
 
 
@@ -144,8 +146,8 @@ print('本次派券运行: {:.2f} s\n'.format(write_time-start))
 print('''
 TO 财务部：
 
-附件是 {} 新规则派券名单!
+附件是 {} 派券名单!
 	'''.format(dt_ff))
 print('{} 回款信息:共回款 {:.0f} 人，合计回款金额 {:.0f} 万元。'.format(dt_ff,hk_pp,hk_money))
-print('其中回款金额小于500元 {} 人，拥有3张券以上的 {} 人，已经发放4次券包的 {} 人。\n\n{} 派券 {} 人！'.format(
+print('其中回款金额小于0元 {} 人，拥有3张券以上的 {} 人，已经发放4次券包的 {} 人。\n\n{} 需派券 {} 人！'.format(
         pp_500_num,df_q3_num,df_p4_num,dt_ff,p_num))
