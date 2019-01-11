@@ -1,11 +1,5 @@
 # DownLoad Address
 
-- 经典版待收列表 > 0.01
-
-<https://www.xiaojilicai.com/Admin/member/index?user_type=0&uname=&cellphone=&realname=&fp_name=&company_name=&customer_name=&lx=mm.collect_money&bj=gt&money=0.01&ava_money=&tz_lx=0&tz_money=&market_source=&fp_source=&source=&start_time=&end_time=&export=1&__hash__=c300cc83953c2bed74a958105ac67360_25a316c095447f3091f66c197dc28b3a>
-
----
-
 ## 存管版
 
 ### 券列表
@@ -79,3 +73,11 @@
 - vip变动（变动时间：start_time2 & end_time2）
 
 <https://cg.xiaojilicai.com/admin/member/vip?username=&realname=&cellphone=&start_time=&end_time=&start_time2=2018-11-01&end_time2=2018-11-30&export=1&__hash__=20394042672907c181d2d889a5563d11_f4531cc6d5573450dfcb73f645beee6e>
+
+---
+
+## 经典版
+
+- 经典版待收列表 > 0.01
+
+<https://www.xiaojilicai.com/Admin/member/index?user_type=0&uname=&cellphone=&realname=&fp_name=&company_name=&customer_name=&lx=mm.collect_money&bj=gt&money=0.01&ava_money=&tz_lx=0&tz_money=&market_source=&fp_source=&source=&start_time=&end_time=&export=1&__hash__=c300cc83953c2bed74a958105ac67360_25a316c095447f3091f66c197dc28b3a>

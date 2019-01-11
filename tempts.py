@@ -5,6 +5,7 @@
 
 import os
 import re
+import sys
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -6664,5 +6665,45 @@ from mpl_toolkits.mplot3d import Axes3D
 #         print ("Iteration is stopped.")
 # df = pd.concat(chunks, ignore_index=True)
 
-m = re.findall(r"r[ua]n", "run ran ren")
-print(type(m))
+# m = re.findall(r"r[ua]n", "run ran ren")
+# print(type(m))
+
+# import datetime
+# now = datetime.datetime.now()
+# print("Current date and time : \n{}".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+# import math
+# r = float(input("radius:"))
+# Area = math.pi * (r ** 2)
+
+# print('Area={}'.format(Area))
+
+# x = '3, 5, 7, 23'
+# l = x.split(',')
+# t = tuple(l)
+
+# print(l)
+# print(t)
+
+# n = 5
+# n2 = n*10 + n
+# n3 = n2*10 + n
+
+# print(n3)
+
+# import calendar
+# y = int(input("Input the year : "))
+# m = int(input("Input the month : "))
+# print(calendar.month(y, m))
+
+# from datetime import date
+# f_date = date(2014, 7, 2)
+# l_date = date(2014, 7, 11)
+# delta = l_date - f_date
+# print(delta.days)
+
+# l = [100,1000,2000]
+# n = int(input("number"))
+
+# if n in l:
+# 	print('in')

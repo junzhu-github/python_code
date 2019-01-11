@@ -3,22 +3,23 @@
 # - 导入库
 import os
 import time
+
 import numpy as np
 import pandas as pd
 
 print('派券系统启动!')
-os.chdir(r'D:\小鸡理财\百度云同步盘\小鸡理财\每日数据\派券')
+os.chdir(r'C:\百度云同步盘\小鸡理财\每日数据\派券')
 
 start = time.time()
 
 # - 导入待派券名单
-with pd.ExcelFile(r'D:\小鸡理财\百度云同步盘\小鸡理财\每日数据\派券\12月派券.xlsx') as xlsx:
+with pd.ExcelFile(r'C:\百度云同步盘\小鸡理财\每日数据\派券\1月派券.xlsx') as xlsx:
     df_jd_bj = pd.read_excel(xlsx,'经典本金')
     df_jd_lx = pd.read_excel(xlsx,'经典利息')
     df_cg = pd.read_excel(xlsx,'存管回款')
     df_quan = pd.read_excel(xlsx,'券')
 # - 导入已派券名单
-df_rcd = pd.read_excel(r'D:\小鸡理财\百度云同步盘\小鸡理财\每日数据\派券\已派券记录.xlsx')
+df_rcd = pd.read_excel(r'C:\百度云同步盘\小鸡理财\每日数据\派券\已派券记录.xlsx')
 print('派券名单导入完成!\n')
 
 # - 合并回款表
@@ -149,5 +150,8 @@ TO 财务部：
 附件是 {} 派券名单!
 	'''.format(dt_ff))
 print('{} 回款信息:共回款 {:.0f} 人，合计回款金额 {:.0f} 万元。'.format(dt_ff,hk_pp,hk_money))
-print('其中回款金额小于0元 {} 人，拥有3张券以上的 {} 人，已经发放4次券包的 {} 人。\n\n{} 需派券 {} 人！'.format(
-        pp_500_num,df_q3_num,df_p4_num,dt_ff,p_num))
+print('其中拥有3张券以上的 {} 人，已经发放4次券包的 {} 人。\n\n{} 需派券 {} 人！'.format(
+        df_q3_num,df_p4_num,dt_ff,p_num))
+
+# print('其中回款金额小于0元 {} 人，拥有3张券以上的 {} 人，已经发放4次券包的 {} 人。\n\n{} 需派券 {} 人！'.format(
+#         pp_500_num,df_q3_num,df_p4_num,dt_ff,p_num))
