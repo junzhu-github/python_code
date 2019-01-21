@@ -6196,8 +6196,13 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # ----------------------------------------------------------
 
-# df = pd.DataFrame(np.arange(6).reshape(2,3),index = ['a','b'],columns = ['col1','col2','col3'])
+df = pd.DataFrame(np.arange(60).reshape(20,3),columns = ['col1','col2','col3'])
 # print(df,'\n')
+
+gp = df.groupby('col1',as_index=False)['col2'].count()
+
+print(gp)
+
 
 # for i , j in df.iterrows():
 #     print('i:',i)
@@ -6707,3 +6712,4 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # if n in l:
 # 	print('in')
+

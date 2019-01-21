@@ -18,9 +18,11 @@ with pd.ExcelFile(r'C:\百度云同步盘\小鸡理财\每日数据\派券\1月�
     df_jd_lx = pd.read_excel(xlsx,'经典利息')
     df_cg = pd.read_excel(xlsx,'存管回款')
     df_quan = pd.read_excel(xlsx,'券')
-# - 导入已派券名单
-df_rcd = pd.read_excel(r'C:\百度云同步盘\小鸡理财\每日数据\派券\已派券记录.xlsx')
-print('派券名单导入完成!\n')
+    df_quaned = pd.read_excel(xlsx,'已派券')
+
+# # - 导入已派券名单
+# df_rcd = pd.read_excel(r'C:\百度云同步盘\小鸡理财\每日数据\派券\已派券记录.xlsx')
+# print('派券名单导入完成!\n')
 
 # - 合并回款表
 df_hk = df_jd_bj.append([df_jd_lx,df_cg], ignore_index=True,sort=True)
@@ -28,12 +30,8 @@ df_hk = df_jd_bj.append([df_jd_lx,df_cg], ignore_index=True,sort=True)
 df_hk['发放时间'] = pd.to_datetime(df_hk['预计本次发放时间'])
 del df_hk['预计本次发放时间']
 
-# df_hk.to_excel('1212.xlsx')
-# bug
-
 dtnow = pd.to_datetime('today')
 day_of_week = dtnow.day_name()
-hour_of_day = int(dtnow.hour)
 print('Today is ',day_of_week)
 
 if day_of_week == 'Friday':
@@ -97,12 +95,12 @@ df_q3_num = df_q3['会员名'].nunique()
 
 
 
-# - 排除已经派了4次的人
-df_rcd['mark'] = 1
-gp_rcd = df_rcd.groupby('会员名',as_index=False)['mark'].sum()
-p4 = gp_rcd[gp_rcd['mark'] >= 4]
-df_hk_today_res_3 = df_hk_today_res_2[~df_hk_today_res_2['会员名'].isin(p4['会员名'])]
-# - 记录已经发放4次券包的人数
+# - 排除已经派了5次的人
+df_quaned_select = df_quaned.loc[df_quaned['券别名'].isin(['小鸡暖冬福利（1）','小鸡暖冬福利（3）']),:]
+gp_quaned = df_quaned_select.groupby('会员名',as_index=False)['ID'].count()
+p4 = gp_quaned[gp_quaned['ID'] >= 5]
+df_hk_today_res_3 = df_hk_today_res_2[~(df_hk_today_res_2['会员名'].isin(p4['会员名']))]
+# - 记录已经发放5次券包的人数
 df_p4 = df_hk_today[df_hk_today['会员名'].isin(p4['会员名'])]
 df_p4_num = df_p4['会员名'].nunique()
 
@@ -131,11 +129,10 @@ name = str(dt_ff) + '派券名单' + '.xlsx'
 res.to_excel(name)
 
 # - 记录已派券名单
-df_x = df_rcd['会员名'].append(res.reset_index()['会员名'])
-df_record = df_x.to_frame()
-
+# df_x = df_rcd['会员名'].append(res.reset_index()['会员名'])
+# df_record = df_x.to_frame()
 # df_record.head()
-df_record.to_excel('已派券记录.xlsx',index=False)
+# df_record.to_excel('已派券记录.xlsx',index=False)
 
 print('名单导出完成!')
 
@@ -150,8 +147,8 @@ TO 财务部：
 附件是 {} 派券名单!
 	'''.format(dt_ff))
 print('{} 回款信息:共回款 {:.0f} 人，合计回款金额 {:.0f} 万元。'.format(dt_ff,hk_pp,hk_money))
-print('其中拥有3张券以上的 {} 人，已经发放4次券包的 {} 人。\n\n{} 需派券 {} 人！'.format(
+print('其中拥有3张券以上的 {} 人，已经发放5次券包的 {} 人。\n\n{} 需派券 {} 人！'.format(
         df_q3_num,df_p4_num,dt_ff,p_num))
 
-# print('其中回款金额小于0元 {} 人，拥有3张券以上的 {} 人，已经发放4次券包的 {} 人。\n\n{} 需派券 {} 人！'.format(
+# print('其中回款金额小于0元 {} 人，拥有3张券以上的 {} 人，已经发放5次券包的 {} 人。\n\n{} 需派券 {} 人！'.format(
 #         pp_500_num,df_q3_num,df_p4_num,dt_ff,p_num))
