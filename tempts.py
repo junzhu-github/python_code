@@ -6196,12 +6196,12 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # ----------------------------------------------------------
 
-df = pd.DataFrame(np.arange(60).reshape(20,3),columns = ['col1','col2','col3'])
-# print(df,'\n')
+# df = pd.DataFrame(np.arange(60).reshape(20,3),columns = ['col1','col2','col3'])
+# # print(df,'\n')
 
-gp = df.groupby('col1',as_index=False)['col2'].count()
+# gp = df.groupby('col1',as_index=False)['col2'].count()
 
-print(gp)
+# print(gp)
 
 
 # for i , j in df.iterrows():
@@ -6713,3 +6713,6 @@ print(gp)
 # if n in l:
 # 	print('in')
 
+mser = pd.Series(np.random.rand(6),index = [['white','white','blue','blue','red','red'],['up','down','up','down','up','down']])
+
+print(mser.unstack())
