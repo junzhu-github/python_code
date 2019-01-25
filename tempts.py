@@ -291,7 +291,13 @@ from mpl_toolkits.mplot3d import Axes3D
 # print(df1.Points == df.Points)
 
 # df1 = pd.DataFrame({'a': range(-5,0), 'b': range(10,15), 'c': range(20,25)})
-# df2 = pd.DataFrame({'a': range(-5,0), 'b': range(10,15), 'c': [20] + list(range(101,105))})
+# df2 = pd.DataFrame({'a1': range(-5,0), 'b1': range(10,15), 'c1': [20] + list(range(101,105))})
+
+# print(df1)
+# print('\n')
+# print(df2)
+
+# print(df1.join(df2,))
 
 # condition = df1['c'] != df2['c']
 
@@ -6713,6 +6719,12 @@ from mpl_toolkits.mplot3d import Axes3D
 # if n in l:
 # 	print('in')
 
-mser = pd.Series(np.random.rand(6),index = [['white','white','blue','blue','red','red'],['up','down','up','down','up','down']])
+# mser = pd.Series(np.random.rand(6),index = [['white','white','blue','blue','red','red'],['up','down','up','down','up','down']])
 
-print(mser.unstack())
+# print(mser.unstack())
+
+df = pd.DataFrame(data={'Province' : ['ON','QC','BC','AL','AL','$','ON'],
+                        'City' : ['?','Montreal','Vancouver','Calgary','Edmonton','Winnipeg','Windsor'],
+                        'Sales' : [13,6,16,8,np.NaN,3,1]})
+
+print(df.replace('a',1))
