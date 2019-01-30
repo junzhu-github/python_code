@@ -11,6 +11,19 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
+ipl_data = {'Team': ['Riders', 'Riders', 'Devils', 'Devils', 'Kings'],
+         'Rank': [1, 2, 2, 3, 3],
+         'Points':[876,789,863,673,741]}
+
+df = pd.DataFrame(ipl_data)
+
+print(df.corr())
+
+
+# df = pd.DataFrame({'B': np.arange(1,10)})
+# df['r1'] = df['B'].rolling(5).sum()
+# df['r2'] = df['B'].rolling(5,min_periods=1).sum()
+# df['r3'] = df['B'].rolling(5,min_periods=2).sum()
 
 # #import data
 # def import_data():
@@ -6723,8 +6736,8 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # print(mser.unstack())
 
-df = pd.DataFrame(data={'Province' : ['ON','QC','BC','AL','AL','$','ON'],
-                        'City' : ['?','Montreal','Vancouver','Calgary','Edmonton','Winnipeg','Windsor'],
-                        'Sales' : [13,6,16,8,np.NaN,3,1]})
+# df = pd.DataFrame(data={'Province' : ['ON','QC','BC','AL','AL','$','ON'],
+#                         'City' : ['?','Montreal','Vancouver','Calgary','Edmonton','Winnipeg','Windsor'],
+#                         'Sales' : [13,6,16,8,np.NaN,3,1]})
 
-print(df.replace('a',1))
+# print(df.replace('a',1))
