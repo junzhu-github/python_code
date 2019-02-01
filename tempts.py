@@ -11,13 +11,29 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-ipl_data = {'Team': ['Riders', 'Riders', 'Devils', 'Devils', 'Kings'],
-         'Rank': [1, 2, 2, 3, 3],
-         'Points':[876,789,863,673,741]}
+year_list=[]
+month_list=[]
+rtn_list=[]               #生成对数收益率，以半年为周期
+for year in range(2006,2017):
+    for month in [6,12]:
+        year_list.append(year)
+        month_list.append(month)
+        rtn=round((-1)**(month/6)*(month/6/10),3)+(np.random.random()-0.5)*0.1
+        rtn_list.append(rtn)
+df=pd.DataFrame()        #生成半年为周期的收益率df
+df['year']=year_list
+df['month']=month_list
+df['rtn']=rtn_list
 
-df = pd.DataFrame(ipl_data)
+print(df)
 
-print(df.corr())
+# ipl_data = {'Team': ['Riders', 'Riders', 'Devils', 'Devils', 'Kings'],
+#          'Rank': [1, 2, 2, 3, 3],
+#          'Points':[876,789,863,673,741]}
+
+# df = pd.DataFrame(ipl_data)
+
+# print(df.corr())
 
 
 # df = pd.DataFrame({'B': np.arange(1,10)})
