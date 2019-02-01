@@ -7,7 +7,7 @@ import time
 import numpy as np
 import pandas as pd
 
-print('派券系统启动!')
+print('\n派券系统启动!\n')
 os.chdir(r'C:\百度云同步盘\小鸡理财\每日数据\派券')
 
 start = time.time()
@@ -31,7 +31,7 @@ dtnow = pd.to_datetime('today')
 day_of_week = dtnow.day_name()
 print('Today is ',day_of_week)
 
-if day_of_week == 'Friday':
+if day_of_week == '1':
 	print('---happy 周末 !---\n')
 
 	timediff = pd.Timedelta(1,unit='d')
