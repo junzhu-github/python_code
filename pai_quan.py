@@ -14,14 +14,12 @@ start = time.time()
 
 # 导入待派券名单
 with pd.ExcelFile(r'C:\百度云同步盘\小鸡理财\每日数据\派券\2月派券.xlsx') as xlsx:
-    df_jd_bj = pd.read_excel(xlsx,'经典本金')
-    df_jd_lx = pd.read_excel(xlsx,'经典利息')
     df_cg = pd.read_excel(xlsx,'存管回款')
     df_quan = pd.read_excel(xlsx,'券')
     df_quaned = pd.read_excel(xlsx,'已派券')
 
 # 合并回款表
-df_hk = df_jd_bj.append([df_jd_lx,df_cg], ignore_index=True,sort=True)
+df_hk = df_cg.copy()
 
 # 整理回款表
 df_hk['发放时间'] = pd.to_datetime(df_hk['预计本次发放时间'])
@@ -31,7 +29,7 @@ dtnow = pd.to_datetime('today')
 day_of_week = dtnow.day_name()
 print('Today is ',day_of_week)
 
-if day_of_week == '1':
+if day_of_week == 'Friday':
 	print('---happy 周末 !---\n')
 
 	timediff = pd.Timedelta(1,unit='d')
@@ -57,9 +55,7 @@ else:
 	df_hk_today = df_hk[(df_hk['发放时间'] == dt_ff)]
 
 # 归类
-class_pai = dict({'6月标':'派券2',
-                  '12月标':'派券2',
-                  360:'派券2',
+class_pai = dict({360:'派券2',
                   180:'派券2',
                   90:'派券1',
                   30:'派券1'})
@@ -69,6 +65,7 @@ df_hk_today['分类'] = df_hk_today.loc[:,'投资期限'].map(class_pai)
 # 记录回款人数和金额
 hk_pp = df_hk_today['会员名'].nunique()
 hk_money = round(df_hk_today['本次发放金额'].sum() / 10000)
+
 
 # 合并计算，排除当日回款金额小于500元
 # 排除总金额<0
@@ -90,7 +87,6 @@ df_hk_today_res_2 = df_hk_today_res_1[~(df_hk_today_res_1['会员名'].isin(q3))
 # 记录拥有3张券以上的人数
 df_q3 = df_hk_today[df_hk_today['会员名'].isin(q3)]
 df_q3_num = df_q3['会员名'].nunique()
-
 
 
 # 排除已经派了5次的人
