@@ -79,13 +79,13 @@ pp_500 = gp_hk[gp_hk['本次发放金额'] < 500]['会员名']
 pp_500_num = len(pp_500)
 
 
-# 排除有 2 张券以上的人
+# 排除有 3 张券以上的人
 df_quan['mark'] = 1
 df_quan_1 = df_quan[~(df_quan['大类'] == '现金券')]	# 排除现金券
 gp_quan = df_quan_1.groupby('会员名',as_index=False)['mark'].sum()
-q3 = gp_quan[gp_quan['mark'] >= 2]['会员名']
+q3 = gp_quan[gp_quan['mark'] >= 3]['会员名']
 df_hk_today_res_2 = df_hk_today_res_1[~(df_hk_today_res_1['会员名'].isin(q3))]
-# 记录拥有 2 张券以上的人数
+# 记录拥有 3 张券以上的人数
 df_q3 = df_hk_today[df_hk_today['会员名'].isin(q3)]
 df_q3_num = df_q3['会员名'].nunique()
 
@@ -146,7 +146,7 @@ print('{} 回款信息:共回款 {:.0f} 人，合计回款金额 {:.0f} 万元�
 # print('其中拥有3张券以上的 {} 人，已经发放5次券包的 {} 人。\n\n{} 需派券 {} 人！'.format(
 #         df_q3_num,df_p4_num,dt_ff,p_num))
 
-print('其中回款金额小于500元 {} 人，当日拥有2张券及以上的 {} 人，当月已发放3次券包的 {} 人。\n\n{} 需派 券包1: {} 人，券包2: {} 人，合计 {} 人！'.format(
+print('其中回款金额小于500元 {} 人，当日拥有3张券及以上的 {} 人，当月已发放3次券包的 {} 人。\n\n{} 需派 券包1: {} 人，券包2: {} 人，合计 {} 人！'.format(
         pp_500_num,df_q3_num,df_p4_num,dt_ff,p_num_13,p_num_612,p_num))
 
 
