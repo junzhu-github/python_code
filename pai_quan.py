@@ -41,13 +41,21 @@ if day_of_week == 'Friday':
 	dt_ff_2 = dtnow + timediff
 	dt_ff_2 = dt_ff_2.strftime('%Y.%m.%d')
 
-	timediff = pd.Timedelta(3,unit='d')
-	dt_ff_3 = dtnow + timediff
-	dt_ff_3 = dt_ff_3.strftime('%Y.%m.%d')
+	# timediff = pd.Timedelta(3,unit='d')
+	# dt_ff_3 = dtnow + timediff
+	# dt_ff_3 = dt_ff_3.strftime('%Y.%m.%d')
 
-	df_hk_today = df_hk[(df_hk['发放时间'] == dt_ff_1) | (df_hk['发放时间'] == dt_ff_2) | (df_hk['发放时间'] == dt_ff_3)]
+	df_hk_today = df_hk[(df_hk['发放时间'] == dt_ff_1) | (df_hk['发放时间'] == dt_ff_2)]
 
-	dt_ff = str(dt_ff_1) + '-' + str(dt_ff_3)
+	dt_ff = str(dt_ff_1) + '-' + str(dt_ff_2)
+elif day_of_week == 'Monday':
+	print('---上班干活!---\n')
+
+	timediff = pd.Timedelta(0,unit='d')
+	dt_ff = dtnow + timediff
+	dt_ff = dt_ff.strftime('%Y.%m.%d')
+
+	df_hk_today = df_hk[(df_hk['发放时间'] == dt_ff)]
 else:
 	print('---平时 is choosed!---\n')
 	timediff = pd.Timedelta(1,unit='d')
@@ -68,14 +76,14 @@ hk_pp = df_hk_today['会员名'].nunique()
 hk_money = round(df_hk_today['本次发放金额'].sum() / 10000)
 
 
-# 合并计算，排除当日回款金额小于 500 元
-# 排除总金额 < 500
+# 合并计算，排除当日回款金额小于 0 元
+# 排除总金额 < 0
 gp_hk = df_hk_today.groupby('会员名',as_index=False)['本次发放金额'].sum()
-l500 = gp_hk[gp_hk['本次发放金额'] >= 500]['会员名']
+l500 = gp_hk[gp_hk['本次发放金额'] >= 0]['会员名']
 # l500
 df_hk_today_res_1 = df_hk_today[df_hk_today['会员名'].isin(l500)]
 # 记录回款金额小于500元的人数
-pp_500 = gp_hk[gp_hk['本次发放金额'] < 500]['会员名']
+pp_500 = gp_hk[gp_hk['本次发放金额'] < 0]['会员名']
 pp_500_num = len(pp_500)
 
 
@@ -90,12 +98,12 @@ df_q3 = df_hk_today[df_hk_today['会员名'].isin(q3)]
 df_q3_num = df_q3['会员名'].nunique()
 
 
-# 排除已经派了 3 次的人
+# 排除已经派了 4 次的人
 df_quaned_select = df_quaned.loc[df_quaned['券别名'].isin(['小鸡春季福利（1）','小鸡春季福利（3）']),:]
 gp_quaned = df_quaned_select.groupby('会员名',as_index=False)['ID'].count()
-p4 = gp_quaned[gp_quaned['ID'] >= 5]
+p4 = gp_quaned[gp_quaned['ID'] >= 4]
 df_hk_today_res_3 = df_hk_today_res_2[~(df_hk_today_res_2['会员名'].isin(p4['会员名']))]
-# 记录已经发放 3 次券包的人数
+# 记录已经发放 4 次券包的人数
 df_p4 = df_hk_today[df_hk_today['会员名'].isin(p4['会员名'])]
 df_p4_num = df_p4['会员名'].nunique()
 
@@ -123,12 +131,6 @@ p_num = res['会员名'].nunique()
 name = str(dt_ff) + '派券名单' + '.xlsx'
 res.to_excel(name)
 
-# 记录已派券名单
-# df_x = df_rcd['会员名'].append(res.reset_index()['会员名'])
-# df_record = df_x.to_frame()
-# df_record.head()
-# df_record.to_excel('已派券记录.xlsx',index=False)
-
 print('名单导出完成!')
 
 write_time = time.time()
@@ -143,63 +145,63 @@ TO 财务部：
 	'''.format(dt_ff))
 print('{} 回款信息:共回款 {:.0f} 人，合计回款金额 {:.0f} 万元。'.format(dt_ff,hk_pp,hk_money))
 
-# print('其中拥有3张券以上的 {} 人，已经发放5次券包的 {} 人。\n\n{} 需派券 {} 人！'.format(
-#         df_q3_num,df_p4_num,dt_ff,p_num))
+# print('其中回款金额小于500元 {} 人，当日拥有3张券及以上的 {} 人，当月已发放3次券包的 {} 人。\n\n{} 需派 券包1: {} 人，券包2: {} 人，合计 {} 人！'.format(
+#         pp_500_num,df_q3_num,df_p4_num,dt_ff,p_num_13,p_num_612,p_num))
 
-print('其中回款金额小于500元 {} 人，当日拥有3张券及以上的 {} 人，当月已发放3次券包的 {} 人。\n\n{} 需派 券包1: {} 人，券包2: {} 人，合计 {} 人！'.format(
-        pp_500_num,df_q3_num,df_p4_num,dt_ff,p_num_13,p_num_612,p_num))
+print('其中当日拥有3张券及以上的 {} 人，当月已发放4次券包的 {} 人。\n\n{} 需派 券包1: {} 人，券包2: {} 人，合计 {} 人！'.format(
+        df_q3_num,df_p4_num,dt_ff,p_num_13,p_num_612,p_num))
 
 
 
-# 券使用统计
-# 冻结→已使用
-df_quan_used['使用情况'] = df_quan_used['使用状态'].replace('投标冻结','已使用')
+# # 券使用统计
+# # 冻结→已使用
+# df_quan_used['使用情况'] = df_quan_used['使用状态'].replace('投标冻结','已使用')
 
-# 汇总
-gp_use_rate = df_quan_used.groupby(by=['利息率','使用情况']).agg({'会员名':np.size,'冻结的匹配金额':np.sum}).unstack().fillna(0)
-gp_use_rate[0,'合计发放(张)'] = gp_use_rate['会员名'].sum(axis=1)
-gp_use_rate[0,'使用率%'] = round(gp_use_rate[('会员名','已使用')] / gp_use_rate[(0,'合计发放(张)')] * 100,2)
-gp_use_rate[0,'投资金额'] = round(gp_use_rate[('冻结的匹配金额','已使用')],0)
-gp_use_rate[0,'单券投资金额'] = round(gp_use_rate[('冻结的匹配金额','已使用')] / gp_use_rate[('会员名','已使用')],2)
+# # 汇总
+# gp_use_rate = df_quan_used.groupby(by=['利息率','使用情况']).agg({'会员名':np.size,'冻结的匹配金额':np.sum}).unstack().fillna(0)
+# gp_use_rate[0,'合计发放(张)'] = gp_use_rate['会员名'].sum(axis=1)
+# gp_use_rate[0,'使用率%'] = round(gp_use_rate[('会员名','已使用')] / gp_use_rate[(0,'合计发放(张)')] * 100,2)
+# gp_use_rate[0,'投资金额'] = round(gp_use_rate[('冻结的匹配金额','已使用')],0)
+# gp_use_rate[0,'单券投资金额'] = round(gp_use_rate[('冻结的匹配金额','已使用')] / gp_use_rate[('会员名','已使用')],2)
 
-# 删除多余列
-gp_use_rate.drop(columns=('冻结的匹配金额'),inplace=True)
+# # 删除多余列
+# gp_use_rate.drop(columns=('冻结的匹配金额'),inplace=True)
 
-# 去除多级列名称
-gp_use_rate.columns = gp_use_rate.columns.droplevel()
+# # 去除多级列名称
+# gp_use_rate.columns = gp_use_rate.columns.droplevel()
 
-# 重做行名称
-gp_use_rate.reset_index(inplace=True)
+# # 重做行名称
+# gp_use_rate.reset_index(inplace=True)
 
-# 将表格导出为图片
-import matplotlib.pyplot as plt
-import six
-from pylab import mpl
-mpl.rcParams['font.sans-serif'] = ['FangSong'] # 指定默认字体
-mpl.rcParams['axes.unicode_minus'] = False # 解决保存图像是负号'-'显示为方块的问题
+# # 将表格导出为图片
+# import matplotlib.pyplot as plt
+# import six
+# from pylab import mpl
+# mpl.rcParams['font.sans-serif'] = ['FangSong'] # 指定默认字体
+# mpl.rcParams['axes.unicode_minus'] = False # 解决保存图像是负号'-'显示为方块的问题
 
-def render_mpl_table(data, col_width=3.0, row_height=0.625, font_size=14,
-                     header_color='#40466e', row_colors=['#f1f1f2', 'w'], edge_color='w',
-                     bbox=[0, 0, 1, 1], header_columns=0,
-                     ax=None, **kwargs):
-    if ax is None:
-        size = (np.array(data.shape[::-1]) + np.array([0, 1])) * np.array([col_width, row_height])
-        fig, ax = plt.subplots(figsize=size)
-        ax.axis('off')
+# def render_mpl_table(data, col_width=3.0, row_height=0.625, font_size=14,
+#                      header_color='#40466e', row_colors=['#f1f1f2', 'w'], edge_color='w',
+#                      bbox=[0, 0, 1, 1], header_columns=0,
+#                      ax=None, **kwargs):
+#     if ax is None:
+#         size = (np.array(data.shape[::-1]) + np.array([0, 1])) * np.array([col_width, row_height])
+#         fig, ax = plt.subplots(figsize=size)
+#         ax.axis('off')
 
-    mpl_table = ax.table(cellText=data.values, bbox=bbox, colLabels=data.columns, **kwargs)
+#     mpl_table = ax.table(cellText=data.values, bbox=bbox, colLabels=data.columns, **kwargs)
 
-    mpl_table.auto_set_font_size(False)
-    mpl_table.set_fontsize(font_size)
+#     mpl_table.auto_set_font_size(False)
+#     mpl_table.set_fontsize(font_size)
 
-    for k, cell in six.iteritems(mpl_table._cells):
-        cell.set_edgecolor(edge_color)
-        if k[0] == 0 or k[1] < header_columns:
-            cell.set_text_props(weight='bold', color='w')
-            cell.set_facecolor(header_color)
-        else:
-            cell.set_facecolor(row_colors[k[0]%len(row_colors) ])
-    return ax
+#     for k, cell in six.iteritems(mpl_table._cells):
+#         cell.set_edgecolor(edge_color)
+#         if k[0] == 0 or k[1] < header_columns:
+#             cell.set_text_props(weight='bold', color='w')
+#             cell.set_facecolor(header_color)
+#         else:
+#             cell.set_facecolor(row_colors[k[0]%len(row_colors) ])
+#     return ax
 
-render_mpl_table(gp_use_rate, header_columns=0, col_width=2.0)
-plt.show()
+# render_mpl_table(gp_use_rate, header_columns=0, col_width=2.0)
+# plt.show()
