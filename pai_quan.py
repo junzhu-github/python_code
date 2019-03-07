@@ -99,7 +99,7 @@ df_q3_num = df_q3['会员名'].nunique()
 
 
 # 排除已经派了 4 次的人
-df_quaned_select = df_quaned.loc[df_quaned['券别名'].isin(['小鸡春季福利（1）','小鸡春季福利（3）']),:]
+df_quaned_select = df_quaned.loc[df_quaned['券别名'].isin(['小鸡春季福利（5）','小鸡春季福利（7）']),:]
 gp_quaned = df_quaned_select.groupby('会员名',as_index=False)['ID'].count()
 p4 = gp_quaned[gp_quaned['ID'] >= 4]
 df_hk_today_res_3 = df_hk_today_res_2[~(df_hk_today_res_2['会员名'].isin(p4['会员名']))]
@@ -153,55 +153,55 @@ print('其中当日拥有3张券及以上的 {} 人，当月已发放4次券包�
 
 
 
-# # 券使用统计
-# # 冻结→已使用
-# df_quan_used['使用情况'] = df_quan_used['使用状态'].replace('投标冻结','已使用')
+# 券使用统计
+# 冻结→已使用
+df_quan_used['使用情况'] = df_quan_used['使用状态'].replace('投标冻结','已使用')
 
-# # 汇总
-# gp_use_rate = df_quan_used.groupby(by=['利息率','使用情况']).agg({'会员名':np.size,'冻结的匹配金额':np.sum}).unstack().fillna(0)
-# gp_use_rate[0,'合计发放(张)'] = gp_use_rate['会员名'].sum(axis=1)
-# gp_use_rate[0,'使用率%'] = round(gp_use_rate[('会员名','已使用')] / gp_use_rate[(0,'合计发放(张)')] * 100,2)
-# gp_use_rate[0,'投资金额'] = round(gp_use_rate[('冻结的匹配金额','已使用')],0)
-# gp_use_rate[0,'单券投资金额'] = round(gp_use_rate[('冻结的匹配金额','已使用')] / gp_use_rate[('会员名','已使用')],2)
+# 汇总
+gp_use_rate = df_quan_used.groupby(by=['利息率','使用情况']).agg({'会员名':np.size,'冻结的匹配金额':np.sum}).unstack().fillna(0)
+gp_use_rate[0,'合计发放(张)'] = gp_use_rate['会员名'].sum(axis=1)
+gp_use_rate[0,'使用率%'] = round(gp_use_rate[('会员名','已使用')] / gp_use_rate[(0,'合计发放(张)')] * 100,2)
+gp_use_rate[0,'投资金额'] = round(gp_use_rate[('冻结的匹配金额','已使用')],0)
+gp_use_rate[0,'单券投资金额'] = round(gp_use_rate[('冻结的匹配金额','已使用')] / gp_use_rate[('会员名','已使用')],2)
 
-# # 删除多余列
-# gp_use_rate.drop(columns=('冻结的匹配金额'),inplace=True)
+# 删除多余列
+gp_use_rate.drop(columns=('冻结的匹配金额'),inplace=True)
 
-# # 去除多级列名称
-# gp_use_rate.columns = gp_use_rate.columns.droplevel()
+# 去除多级列名称
+gp_use_rate.columns = gp_use_rate.columns.droplevel()
 
-# # 重做行名称
-# gp_use_rate.reset_index(inplace=True)
+# 重做行名称
+gp_use_rate.reset_index(inplace=True)
 
-# # 将表格导出为图片
-# import matplotlib.pyplot as plt
-# import six
-# from pylab import mpl
-# mpl.rcParams['font.sans-serif'] = ['FangSong'] # 指定默认字体
-# mpl.rcParams['axes.unicode_minus'] = False # 解决保存图像是负号'-'显示为方块的问题
+# 将表格导出为图片
+import matplotlib.pyplot as plt
+import six
+from pylab import mpl
+mpl.rcParams['font.sans-serif'] = ['FangSong'] # 指定默认字体
+mpl.rcParams['axes.unicode_minus'] = False # 解决保存图像是负号'-'显示为方块的问题
 
-# def render_mpl_table(data, col_width=3.0, row_height=0.625, font_size=14,
-#                      header_color='#40466e', row_colors=['#f1f1f2', 'w'], edge_color='w',
-#                      bbox=[0, 0, 1, 1], header_columns=0,
-#                      ax=None, **kwargs):
-#     if ax is None:
-#         size = (np.array(data.shape[::-1]) + np.array([0, 1])) * np.array([col_width, row_height])
-#         fig, ax = plt.subplots(figsize=size)
-#         ax.axis('off')
+def render_mpl_table(data, col_width=3.0, row_height=0.625, font_size=14,
+                     header_color='#40466e', row_colors=['#f1f1f2', 'w'], edge_color='w',
+                     bbox=[0, 0, 1, 1], header_columns=0,
+                     ax=None, **kwargs):
+    if ax is None:
+        size = (np.array(data.shape[::-1]) + np.array([0, 1])) * np.array([col_width, row_height])
+        fig, ax = plt.subplots(figsize=size)
+        ax.axis('off')
 
-#     mpl_table = ax.table(cellText=data.values, bbox=bbox, colLabels=data.columns, **kwargs)
+    mpl_table = ax.table(cellText=data.values, bbox=bbox, colLabels=data.columns, **kwargs)
 
-#     mpl_table.auto_set_font_size(False)
-#     mpl_table.set_fontsize(font_size)
+    mpl_table.auto_set_font_size(False)
+    mpl_table.set_fontsize(font_size)
 
-#     for k, cell in six.iteritems(mpl_table._cells):
-#         cell.set_edgecolor(edge_color)
-#         if k[0] == 0 or k[1] < header_columns:
-#             cell.set_text_props(weight='bold', color='w')
-#             cell.set_facecolor(header_color)
-#         else:
-#             cell.set_facecolor(row_colors[k[0]%len(row_colors) ])
-#     return ax
+    for k, cell in six.iteritems(mpl_table._cells):
+        cell.set_edgecolor(edge_color)
+        if k[0] == 0 or k[1] < header_columns:
+            cell.set_text_props(weight='bold', color='w')
+            cell.set_facecolor(header_color)
+        else:
+            cell.set_facecolor(row_colors[k[0]%len(row_colors) ])
+    return ax
 
-# render_mpl_table(gp_use_rate, header_columns=0, col_width=2.0)
-# plt.show()
+render_mpl_table(gp_use_rate, header_columns=0, col_width=2.0)
+plt.show()
