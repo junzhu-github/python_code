@@ -28,6 +28,7 @@ del df_hk['预计本次发放时间']
 
 dtnow = pd.to_datetime('today')
 day_of_week = dtnow.day_name()
+dt_hour = pd.datetime.now().hour
 print('Today is ',day_of_week)
 
 if day_of_week == 'Friday':
@@ -48,7 +49,7 @@ if day_of_week == 'Friday':
 	df_hk_today = df_hk[(df_hk['发放时间'] == dt_ff_1) | (df_hk['发放时间'] == dt_ff_2)]
 
 	dt_ff = str(dt_ff_1) + '-' + str(dt_ff_2)
-elif day_of_week == 'Monday':
+elif day_of_week == 'Monday' and dt_hour < 12:
 	print('---上班干活!---\n')
 
 	timediff = pd.Timedelta(0,unit='d')
@@ -155,6 +156,8 @@ print('其中当日拥有3张券及以上的 {} 人，当月已发放4次券包�
 
 # 券使用统计
 # 冻结→已使用
+select_name = ['小鸡春季福利（5）','小鸡春季福利（6）','小鸡春季福利（7）','小鸡春季福利（8）']
+df_quan_used = df_quan_used[df_quan_used['券别名'].isin(select_name)]
 df_quan_used['使用情况'] = df_quan_used['使用状态'].replace('投标冻结','已使用')
 
 # 汇总
