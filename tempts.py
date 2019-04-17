@@ -6,17 +6,81 @@
 import os
 import re
 import sys
+
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+import requests
 import six
+import xlwings as xw
+from mpl_toolkits.mplot3d import Axes3D
 
-rng = pd.date_range('1/1/2018', periods=10, freq='W-SAT')
-ts = pd.Series(np.arange(10), index=rng)
+r = requests.get('http://page2.dfpan.com/fs/9x0ide0z7h3ednbziyuan3/')
+wc = r.text
 
-gap = ts[(rng < '2018-03-01')]
-print(gap)
+# print(wc.find("文件大小:"))
+print(re.findall(r"文件大小:(\d+\.?\d*){1}\sMB",wc))
+
+# print(re.search(r"文件大小:", wc))
+
+# print(type(web_content))
+
+# print(r.encoding)
+# print(r.content)
+
+# dtnow = pd.to_datetime('today')
+# print(dtnow.strftime('%Y-%m-01'))
+# print(dtnow) 
+
+# a = np.array([1,2]) * np.array([3,4])
+# print(a)
+
+# a = tuple(range(1,10))
+# print(a)
+# print(type(a))
+
+# df = pd.DataFrame()
+
+# app = xw.App(visible=False, add_book=False)
+# xls = app.books.open(r'C:\Users\Dragon\Downloads\报送数据.xls')
+# sheet = xls.sheets[0]
+
+# df = sheet.range('A1').options(pd.DataFrame, expand='table').value
+
+# xls.close()
+# app.quit()
+
+
+# df.drop('逾期',axis=1).to_csv('pandas.txt', header=None, index=None, sep=',')
+
+
+# info = sheet.used_range
+# nrows = info.last_cell.row
+# ncols = info.last_cell.column
+
+# print(type(sheet))
+# print('='*20)
+# print(info)
+# print('='*20)
+# print(nrows)
+# print('='*20)
+# print(ncols)
+# print('='*20)
+# print(sheet.range('A1').expand().value)
+# print(sheet.range('A1').options(pd.DataFrame, expand='table').value)
+# print('='*20)
+# print(type(sheet.range('A1').options(pd.DataFrame, expand='table').value))
+
+
+
+# df = pd.read_excel(r'C:\Users\Dragon\Downloads\VIP变动记录.xls')
+# print(df.head())
+
+# rng = pd.date_range('1/1/2018', periods=10, freq='W-SAT')
+# ts = pd.Series(np.arange(10), index=rng)
+
+# gap = ts[(rng < '2018-03-01')]
+# print(gap)
 
 # dtnow = pd.to_datetime('today') 
 # print(dtnow)

@@ -13,7 +13,7 @@ os.chdir(r'C:\百度云同步盘\小鸡理财\每日数据\派券')
 start = time.time()
 
 # 导入待派券名单
-with pd.ExcelFile(r'C:\百度云同步盘\小鸡理财\每日数据\派券\3月派券.xlsx') as xlsx:
+with pd.ExcelFile(r'C:\百度云同步盘\小鸡理财\每日数据\派券\4月派券.xlsx') as xlsx:
     df_cg = pd.read_excel(xlsx,'存管回款')
     df_quan = pd.read_excel(xlsx,'券')
     df_quaned = pd.read_excel(xlsx,'已派券')
@@ -37,21 +37,18 @@ if day_of_week == 'Friday':
 	timediff = pd.Timedelta(1,unit='d')
 	dt_ff_1 = dtnow + timediff
 	dt_ff_1 = dt_ff_1.strftime('%Y.%m.%d')
-
-	timediff = pd.Timedelta(2,unit='d')
+    
+    # 周末天数，默认 2 天
+	weekend_num = 2
+	timediff = pd.Timedelta(weekend_num,unit='d')
 	dt_ff_2 = dtnow + timediff
 	dt_ff_2 = dt_ff_2.strftime('%Y.%m.%d')
 
-	# timediff = pd.Timedelta(3,unit='d')
-	# dt_ff_3 = dtnow + timediff
-	# dt_ff_3 = dt_ff_3.strftime('%Y.%m.%d')
-
-	df_hk_today = df_hk[(df_hk['发放时间'] == dt_ff_1) | (df_hk['发放时间'] == dt_ff_2)]
+	df_hk_today = df_hk[(df_hk['发放时间'] >= dt_ff_1) & (df_hk['发放时间'] <= dt_ff_2)]
 
 	dt_ff = str(dt_ff_1) + '-' + str(dt_ff_2)
 elif day_of_week == 'Monday' and dt_hour < 12:
 	print('---上班干活!---\n')
-
 	timediff = pd.Timedelta(0,unit='d')
 	dt_ff = dtnow + timediff
 	dt_ff = dt_ff.strftime('%Y.%m.%d')
@@ -112,6 +109,7 @@ df_p4_num = df_p4['会员名'].nunique()
 # 确定要派哪类券
 gp_class = df_hk_today_res_3.groupby(['会员名','真实姓名','分类'])['本次发放金额'].sum().unstack()
 gp_class.fillna(0,inplace=True)
+
 if len(gp_class.columns) == 1:
 	gp_class['派券分类'] = gp_class.columns[0]
 else:
@@ -144,9 +142,9 @@ TO 财务部：
 
 附件是 {} 派券名单!
 	'''.format(dt_ff))
-print('{} 回款信息:共回款 {:.0f} 人，合计回款金额 {:.0f} 万元。'.format(dt_ff,hk_pp,hk_money))
+print('{} 回款信息:共发放 {:.0f} 人，合计发放金额 {:.0f} 万元。'.format(dt_ff,hk_pp,hk_money))
 
-# print('其中回款金额小于500元 {} 人，当日拥有3张券及以上的 {} 人，当月已发放3次券包的 {} 人。\n\n{} 需派 券包1: {} 人，券包2: {} 人，合计 {} 人！'.format(
+# print('其中发放金额小于500元 {} 人，当日拥有3张券及以上的 {} 人，当月已发放3次券包的 {} 人。\n\n{} 需派 券包1: {} 人，券包2: {} 人，合计 {} 人！'.format(
 #         pp_500_num,df_q3_num,df_p4_num,dt_ff,p_num_13,p_num_612,p_num))
 
 print('其中当日拥有3张券及以上的 {} 人，当月已发放4次券包的 {} 人。\n\n{} 需派 券包1: {} 人，券包2: {} 人，合计 {} 人！'.format(
@@ -155,26 +153,41 @@ print('其中当日拥有3张券及以上的 {} 人，当月已发放4次券包�
 
 
 # 券使用统计
-# 冻结→已使用
-select_name = ['小鸡春季福利（5）','小鸡春季福利（6）','小鸡春季福利（7）','小鸡春季福利（8）']
-df_quan_used = df_quan_used[df_quan_used['券别名'].isin(select_name)]
-df_quan_used['使用情况'] = df_quan_used['使用状态'].replace('投标冻结','已使用')
+# 本月发券使用统计
+df_month_quan_used = df_quan_used[df_quan_used['生效时间'] >= dtnow.strftime('%Y-%m-01')]
 
-# 汇总
-gp_use_rate = df_quan_used.groupby(by=['利息率','使用情况']).agg({'会员名':np.size,'冻结的匹配金额':np.sum}).unstack().fillna(0)
-gp_use_rate[0,'合计发放(张)'] = gp_use_rate['会员名'].sum(axis=1)
-gp_use_rate[0,'使用率%'] = round(gp_use_rate[('会员名','已使用')] / gp_use_rate[(0,'合计发放(张)')] * 100,2)
-gp_use_rate[0,'投资金额'] = round(gp_use_rate[('冻结的匹配金额','已使用')],0)
-gp_use_rate[0,'单券投资金额'] = round(gp_use_rate[('冻结的匹配金额','已使用')] / gp_use_rate[('会员名','已使用')],2)
+# 累计发券使用统计
+df_all_quan_used = df_quan_used
 
-# 删除多余列
-gp_use_rate.drop(columns=('冻结的匹配金额'),inplace=True)
+# 券表格整理
+def table_clean(df):
+    # 冻结→已使用
+    select_name = ['小鸡春季福利（5）','小鸡春季福利（6）','小鸡春季福利（7）','小鸡春季福利（8）']
+    df = df[df['券别名'].isin(select_name)].copy()
+    df['使用情况'] = df['使用状态'].replace('投标冻结','已使用')
 
-# 去除多级列名称
-gp_use_rate.columns = gp_use_rate.columns.droplevel()
+    # 汇总
+    gp_use_rate = df.groupby(by=['利息率','使用情况']).agg({'会员名':np.size,'冻结的匹配金额':np.sum}).unstack().fillna(0)
+    gp_use_rate[0,'合计发放(张)'] = gp_use_rate['会员名'].sum(axis=1)
+    gp_use_rate[0,'使用率%'] = round(gp_use_rate[('会员名','已使用')] / gp_use_rate[(0,'合计发放(张)')] * 100,2)
+    gp_use_rate[0,'投资金额'] = round(gp_use_rate[('冻结的匹配金额','已使用')],0)
+    gp_use_rate[0,'单券投资金额'] = round(gp_use_rate[('冻结的匹配金额','已使用')] / gp_use_rate[('会员名','已使用')],2)
 
-# 重做行名称
-gp_use_rate.reset_index(inplace=True)
+    # 删除多余列
+    gp_use_rate.drop(columns=('冻结的匹配金额'),inplace=True)
+
+    # 去除多级列名称
+    gp_use_rate.columns = gp_use_rate.columns.droplevel()
+
+    # 重做行名称
+    gp_use_rate.reset_index(inplace=True)
+
+    return gp_use_rate
+
+# 输出使用结果
+gp_month_quan_used = table_clean(df_month_quan_used)
+gp_all_quan_used =  table_clean(df_all_quan_used)
+
 
 # 将表格导出为图片
 import matplotlib.pyplot as plt
@@ -186,17 +199,19 @@ mpl.rcParams['axes.unicode_minus'] = False # 解决保存图像是负号'-'显�
 def render_mpl_table(data, col_width=3.0, row_height=0.625, font_size=14,
                      header_color='#40466e', row_colors=['#f1f1f2', 'w'], edge_color='w',
                      bbox=[0, 0, 1, 1], header_columns=0,
-                     ax=None, **kwargs):
+                     ax=None, title=None,**kwargs):
     if ax is None:
         size = (np.array(data.shape[::-1]) + np.array([0, 1])) * np.array([col_width, row_height])
         fig, ax = plt.subplots(figsize=size)
         ax.axis('off')
 
+    # 生成表格
     mpl_table = ax.table(cellText=data.values, bbox=bbox, colLabels=data.columns, **kwargs)
 
     mpl_table.auto_set_font_size(False)
     mpl_table.set_fontsize(font_size)
 
+    # 隔行添加背景色
     for k, cell in six.iteritems(mpl_table._cells):
         cell.set_edgecolor(edge_color)
         if k[0] == 0 or k[1] < header_columns:
@@ -204,7 +219,16 @@ def render_mpl_table(data, col_width=3.0, row_height=0.625, font_size=14,
             cell.set_facecolor(header_color)
         else:
             cell.set_facecolor(row_colors[k[0]%len(row_colors) ])
+    
+    ax.set_title(title,fontsize=18)
+    ax.set_axis_off()
+
     return ax
 
-render_mpl_table(gp_use_rate, header_columns=0, col_width=2.0)
+size = (np.array(gp_month_quan_used.shape[::-1]) + np.array([0, 1])) * np.array([3.0, 0.625*2])
+fig, (ax1, ax2) = plt.subplots(2,1,figsize=size)
+
+render_mpl_table(gp_month_quan_used, ax=ax1, header_columns=0, col_width=2.0, title='本月发券使用统计')
+render_mpl_table(gp_all_quan_used, ax=ax2, header_columns=0, col_width=2.0, title='累计发券使用统计')
+
 plt.show()
