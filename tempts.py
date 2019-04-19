@@ -15,11 +15,18 @@ import six
 import xlwings as xw
 from mpl_toolkits.mplot3d import Axes3D
 
-r = requests.get('http://page2.dfpan.com/fs/9x0ide0z7h3ednbziyuan3/')
-wc = r.text
+num1 = 10000
+num2 = 100000
 
-# print(wc.find("文件大小:"))
-print(re.findall(r"文件大小:(\d+\.?\d*){1}\sMB",wc))
+total = num1 + num2
+
+print(f'{total:,}')
+
+# r = requests.get('http://page2.dfpan.com/fs/9x0ide0z7h3ednbziyuan3/')
+# wc = r.text
+
+# # print(wc.find("文件大小:"))
+# print(re.findall(r"文件大小:(\d+\.?\d*){1}\sMB",wc))
 
 # print(re.search(r"文件大小:", wc))
 

@@ -35,8 +35,8 @@ for i in urls:
     # l = l-1
 print('~~~find_all_file_size~~~')
 
-# # 把结果写入新的txt
-# with open('b.txt','w') as f:
-#     for k,v in d.items():
-#         f.write(k + '   '+ v + '\n')
+# 把结果写入新的txt
+with open('b.txt','w') as f:
+    for k,v in d.items():
+        f.write(k + '   '+ v + '\n')
 print('~~~end~~~')
