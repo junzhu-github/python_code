@@ -5,7 +5,8 @@ import xlwings as xw
 
 filelist = []
 
-for root, dirs, files in os.walk(r'C:\Users\Dragon\Desktop\报送数据（2019年3月）', topdown=False):
+dir_address = r'C:\百度云同步盘\小鸡理财\数据报告\互金协会数据报送\每月数据获取\2019.06\报送数据(2019年6月)'
+for root, dirs, files in os.walk(dir_address, topdown=False):
     for name in files:
         str = os.path.join(root, name)
         if str.split('.')[-1] == 'xls':
@@ -33,6 +34,6 @@ print('\nall xls is merged')
 df['身份证号'] = df['身份证号'].str.upper()
 # df.drop('逾期',axis=1).to_csv('pandas.txt', header=None, sep=',')
 df.drop_duplicates(subset=['合创信用代码', '合同编号', '放贷时间']).drop(
-    '逾期', axis=1).to_excel(r'C:\Users\Dragon\Desktop\报送数据（2019年3月）\wancheng.xlsx')
+    '逾期', axis=1).to_excel(r'C:\Users\Dragon\Desktop\wancheng.xlsx')
 
 print('\nend')

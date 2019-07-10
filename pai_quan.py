@@ -13,7 +13,7 @@ os.chdir(r'C:\百度云同步盘\小鸡理财\每日数据\派券')
 start = time.time()
 
 # 导入待派券名单
-with pd.ExcelFile(r'C:\百度云同步盘\小鸡理财\每日数据\派券\4月派券.xlsx') as xlsx:
+with pd.ExcelFile(r'C:\百度云同步盘\小鸡理财\每日数据\派券\7月派券.xlsx') as xlsx:
     df_cg = pd.read_excel(xlsx,'存管回款')
     df_quan = pd.read_excel(xlsx,'券')
     df_quaned = pd.read_excel(xlsx,'已派券')
@@ -61,11 +61,21 @@ else:
 	dt_ff = dt_ff.strftime('%Y.%m.%d')
 	df_hk_today = df_hk[(df_hk['发放时间'] == dt_ff)]
 
+
+# 判断回款表是否正确
+if df_hk_today.shape[0] == 0:
+    print(df_hk_today.head())
+    print('回款表有错误！')
+    exit()
+else:
+    pass
+
+
 # 归类
-class_pai = dict({360:'派券2',
-                  180:'派券2',
-                  90:'派券1',
-                  30:'派券1'})
+class_pai = {360:'派券2',
+            180:'派券2',
+            90:'派券1',
+            30:'派券1'}
 df_hk_today = df_hk_today.copy()
 df_hk_today['分类'] = df_hk_today.loc[:,'投资期限'].map(class_pai)
 
@@ -97,7 +107,7 @@ df_q3_num = df_q3['会员名'].nunique()
 
 
 # 排除已经派了 4 次的人
-df_quaned_select = df_quaned.loc[df_quaned['券别名'].isin(['小鸡春季福利（5）','小鸡春季福利（7）']),:]
+df_quaned_select = df_quaned.loc[df_quaned['券别名'].isin(['清凉一夏（1）','清凉一夏（3）']),:]
 gp_quaned = df_quaned_select.groupby('会员名',as_index=False)['ID'].count()
 p4 = gp_quaned[gp_quaned['ID'] >= 4]
 df_hk_today_res_3 = df_hk_today_res_2[~(df_hk_today_res_2['会员名'].isin(p4['会员名']))]
@@ -109,6 +119,7 @@ df_p4_num = df_p4['会员名'].nunique()
 # 确定要派哪类券
 gp_class = df_hk_today_res_3.groupby(['会员名','真实姓名','分类'])['本次发放金额'].sum().unstack()
 gp_class.fillna(0,inplace=True)
+
 
 if len(gp_class.columns) == 1:
 	gp_class['派券分类'] = gp_class.columns[0]
@@ -162,7 +173,7 @@ df_all_quan_used = df_quan_used
 # 券表格整理
 def table_clean(df):
     # 冻结→已使用
-    select_name = ['小鸡春季福利（5）','小鸡春季福利（6）','小鸡春季福利（7）','小鸡春季福利（8）']
+    select_name = ['清凉一夏（1）','清凉一夏（2）','清凉一夏（3）','清凉一夏（4）']
     df = df[df['券别名'].isin(select_name)].copy()
     df['使用情况'] = df['使用状态'].replace('投标冻结','已使用')
 
@@ -183,10 +194,6 @@ def table_clean(df):
     gp_use_rate.reset_index(inplace=True)
 
     return gp_use_rate
-
-# 输出使用结果
-gp_month_quan_used = table_clean(df_month_quan_used)
-gp_all_quan_used =  table_clean(df_all_quan_used)
 
 
 # 将表格导出为图片
@@ -225,10 +232,18 @@ def render_mpl_table(data, col_width=3.0, row_height=0.625, font_size=14,
 
     return ax
 
-size = (np.array(gp_month_quan_used.shape[::-1]) + np.array([0, 1])) * np.array([3.0, 0.625*2])
-fig, (ax1, ax2) = plt.subplots(2,1,figsize=size)
+# 设定手动开关
+switch = 0
 
-render_mpl_table(gp_month_quan_used, ax=ax1, header_columns=0, col_width=2.0, title='本月发券使用统计')
-render_mpl_table(gp_all_quan_used, ax=ax2, header_columns=0, col_width=2.0, title='累计发券使用统计')
+if day_of_week == 'Friday' or switch:
 
-plt.show()
+    gp_month_quan_used = table_clean(df_month_quan_used)
+    gp_all_quan_used =  table_clean(df_all_quan_used)
+
+    size = (np.array(gp_month_quan_used.shape[::-1]) + np.array([0, 1])) * np.array([3.0, 0.625*2])
+    fig, (ax1, ax2) = plt.subplots(2,1,figsize=size)
+
+    render_mpl_table(gp_month_quan_used, ax=ax1, header_columns=0, col_width=2.0, title='本月发券使用统计')
+    render_mpl_table(gp_all_quan_used, ax=ax2, header_columns=0, col_width=2.0, title='累计发券使用统计')
+
+    plt.show()

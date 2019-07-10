@@ -15,20 +15,100 @@ import six
 import xlwings as xw
 from mpl_toolkits.mplot3d import Axes3D
 
-num1 = 10000
-num2 = 100000
+import time
+print(time.localtime)
 
-total = num1 + num2
+# ---------------------------------------------------
 
-print(f'{total:,}')
+# l = (10,3)
+# print(~l[0])
 
-# r = requests.get('http://page2.dfpan.com/fs/9x0ide0z7h3ednbziyuan3/')
-# wc = r.text
+# if ~l[0]:
+#     print('yes')
+# else:
+#     print('no')
+
+# ---------------------------------------------------
+
+# def f(a=1,b=2):
+#     c = a + b
+#     return c,(a,b)
+
+# # m,n = f(2,3)
+# print(f(2,3)[1][0])
+
+# ---------------------------------------------------
+
+# x = [1, 2, 3]
+
+# print(x*3)
+
+# print([x]*3)
+# print(*[x]*3)
+
+# r = zip( *[x] * 3)
+# print(list(r))
+
+# ---------------------------------------------------
+
+# r = requests.get('http://page1.dfpan.com/fs/6a3sai7nda0191409/') 
+# print(requests.get('http://dix3.com/fs/casi1na1b1036d552/').url)
+
+# ---------------------------------------------------
+
+# dir_num = 0
+# zi = {}
+
+# for root, dirs, files in os.walk(r'F:\VDownload\baidu\sese\pic & video'):
+# #    print(root)
+# #    print(dirs)
+# #    print(files)
+# #    print('-'*50)
+#     dir_num += len(dirs)
+#     for i in files:
+#         k = os.path.splitext(i)[1]
+#         if k in zi:
+#             zi[k] += 1
+#         else:
+#             zi[k] = 1
+
+# for key,value in zi.items():
+#     print('该文件夹下共有类型为【%s】的文件 %s 个' % (key,value))
+# print('该文件夹下共有类型为【文件夹】的文件 %s 个' % (dir_num))
+
+# ---------------------------------------------------
+# num1 = 10000
+# num2 = 100000
+
+# total = num1 + num2
+
+# print(f'{total:,}')
+# exit()
+
+# print('ok')
+
+# r1 = requests.get('http://srcpan.com/fs/aaas8i2n8a3191700/')
+# # r2 = requests.get('http://page2.dfpan.com/fs/2cah2u6qfu5a1n59/')
+
+# wc1 = r1.text
+# # wc2 = r2.text
+# print(len(wc1))
+# # print(len(wc2))
+
+# with open('u1.txt','w', encoding="utf-8") as f:
+#     f.write(wc1)
+
+# # with open('u2.txt','w', encoding="utf-8") as f:
+# #     f.write(wc2)
+# print('ok')
+
+# print(wc2)
 
 # # print(wc.find("文件大小:"))
 # print(re.findall(r"文件大小:(\d+\.?\d*){1}\sMB",wc))
 
-# print(re.search(r"文件大小:", wc))
+# print(re.search(r"文件大小", wc1))
+# print(re.search(r"文件大小", wc2))
 
 # print(type(web_content))
 
