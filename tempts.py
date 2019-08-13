@@ -3,9 +3,11 @@
 # @author: ying
 
 
+import datetime as dt
 import os
 import re
 import sys
+import time
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -15,8 +17,42 @@ import six
 import xlwings as xw
 from mpl_toolkits.mplot3d import Axes3D
 
-import time
-print(time.localtime)
+# ---------------------------------------------------
+
+for i in range(100):
+    s = '*'*i
+    print('\r{}'.format(s),end='')
+    time.sleep(1)
+
+# ---------------------------------------------------
+
+# print(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
+# with pd.ExcelFile(r'C:\Users\Dragon\Desktop\表格3.xlsx') as xlsx:
+#     df_1 = pd.read_excel(xlsx,'邀请')
+#     df_2 = pd.read_excel(xlsx,'业务')
+#     df_3 = pd.read_excel(xlsx,'回款')
+    
+# df_hr = pd.merge(df_1,df_2,
+#                  how='inner', 
+#                  left_on='邀请人', right_on='邀请人手机号码')
+                 
+# df_3['发放时间'] = pd.to_datetime(df_3['预计本次发放时间']).dt.strftime('%Y-%m')
+# # df_3['发放时间'] = df_3['发放时间'].dt.strftime('%Y-%m')
+
+# df_hk = df_3.groupby(['投资用户','真实姓名','手机号码','会员类型','发放时间'], as_index=False)['本次发放金额'].sum()
+
+# df = pd.merge(df_hr,df_hk,
+#              how='inner',
+#              left_on='用户名', right_on='投资用户',)
+
+# print(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
+# df.loc[:,['邀请人用户名', '邀请人真实姓名', '邀请人手机号码', '投资用户', '真实姓名', '手机号码','会员类型', '发放时间', '本次发放金额']].to_excel(r'C:\Users\Dragon\Desktop\表格4.xlsx',index=False)  
+
+# print(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
+# exit()
 
 # ---------------------------------------------------
 

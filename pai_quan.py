@@ -6,14 +6,14 @@ import time
 
 import numpy as np
 import pandas as pd
- 
+
 print('\n派券系统启动!\n')
 os.chdir(r'C:\百度云同步盘\小鸡理财\每日数据\派券')
 
 start = time.time()
 
 # 导入待派券名单
-with pd.ExcelFile(r'C:\百度云同步盘\小鸡理财\每日数据\派券\7月派券.xlsx') as xlsx:
+with pd.ExcelFile(r'C:\百度云同步盘\小鸡理财\每日数据\派券\8月派券.xlsx') as xlsx:
     df_cg = pd.read_excel(xlsx,'存管回款')
     df_quan = pd.read_excel(xlsx,'券')
     df_quaned = pd.read_excel(xlsx,'已派券')
@@ -72,10 +72,10 @@ else:
 
 
 # 归类
-class_pai = {360:'派券2',
-            180:'派券2',
-            90:'派券1',
-            30:'派券1'}
+class_pai = {360:'清凉一夏（2）',
+            180:'清凉一夏（2）',
+            90:'清凉一夏（1）',
+            30:'清凉一夏（1）'}
 df_hk_today = df_hk_today.copy()
 df_hk_today['分类'] = df_hk_today.loc[:,'投资期限'].map(class_pai)
 
@@ -122,24 +122,28 @@ gp_class.fillna(0,inplace=True)
 
 
 if len(gp_class.columns) == 1:
-	gp_class['派券分类'] = gp_class.columns[0]
+	gp_class['券包名（必填,只需要填写在第二行）'] = gp_class.columns[0]
 else:
-	gp_class['派券分类'] = np.where(gp_class['派券2'] == 0,'派券1','派券2')
+	gp_class['券包名（必填,只需要填写在第二行）'] = np.where(gp_class['清凉一夏（2）'] == 0,'清凉一夏（1）','清凉一夏（2）')
 
 print('名单整理完成! 开始导出EXCEL...')
 
 # 查找用户名等信息
 res_temp = gp_class.copy()
 res_temp = res_temp.reset_index()
-res = res_temp.loc[:,['会员名','真实姓名','派券分类']]
+res_temp['用户名（必填）'] = res_temp['会员名']
+
+columns_name = ['ID(可不写)','用户名（必填）','券包名（必填,只需要填写在第二行）','备注（只需要填写在第二行）']
+res = res_temp.reindex(columns=columns_name)
+
 # 记录本次派券人数
-p_num_13 = res.loc[res['派券分类']=='派券1','会员名'].nunique()
-p_num_612 = res.loc[res['派券分类']=='派券2','会员名'].nunique()
-p_num = res['会员名'].nunique()
+p_num_13 = res.loc[res['券包名（必填,只需要填写在第二行）']=='清凉一夏（1）','用户名（必填）'].nunique()
+p_num_612 = res.loc[res['券包名（必填,只需要填写在第二行）']=='清凉一夏（2）','用户名（必填）'].nunique()
+p_num = res['用户名（必填）'].nunique()
 
 # 导出到表格
-name = str(dt_ff) + '派券名单' + '.xlsx'
-res.to_excel(name)
+name = str(dt_ff) + '派券名单' + '.xls'
+res.to_excel(name,index=False)
 
 print('名单导出完成!')
 
@@ -161,16 +165,13 @@ print('{} 回款信息:共发放 {:.0f} 人，合计发放金额 {:.0f} 万元�
 print('其中当日拥有3张券及以上的 {} 人，当月已发放4次券包的 {} 人。\n\n{} 需派 券包1: {} 人，券包2: {} 人，合计 {} 人！'.format(
         df_q3_num,df_p4_num,dt_ff,p_num_13,p_num_612,p_num))
 
+print('\n派券名单已提交系统，请审核！')
+
 
 
 # 券使用统计
-# 本月发券使用统计
-df_month_quan_used = df_quan_used[df_quan_used['生效时间'] >= dtnow.strftime('%Y-%m-01')]
 
-# 累计发券使用统计
-df_all_quan_used = df_quan_used
-
-# 券表格整理
+## 券表格整理
 def table_clean(df):
     # 冻结→已使用
     select_name = ['清凉一夏（1）','清凉一夏（2）','清凉一夏（3）','清凉一夏（4）']
@@ -178,7 +179,7 @@ def table_clean(df):
     df['使用情况'] = df['使用状态'].replace('投标冻结','已使用')
 
     # 汇总
-    gp_use_rate = df.groupby(by=['利息率','使用情况']).agg({'会员名':np.size,'冻结的匹配金额':np.sum}).unstack().fillna(0)
+    gp_use_rate = df.groupby(by=['利息率','使用情况']).agg({'用户名（必填）':np.size,'冻结的匹配金额':np.sum}).unstack().fillna(0)
     gp_use_rate[0,'合计发放(张)'] = gp_use_rate['会员名'].sum(axis=1)
     gp_use_rate[0,'使用率%'] = round(gp_use_rate[('会员名','已使用')] / gp_use_rate[(0,'合计发放(张)')] * 100,2)
     gp_use_rate[0,'投资金额'] = round(gp_use_rate[('冻结的匹配金额','已使用')],0)
@@ -196,17 +197,18 @@ def table_clean(df):
     return gp_use_rate
 
 
-# 将表格导出为图片
-import matplotlib.pyplot as plt
-import six
-from pylab import mpl
-mpl.rcParams['font.sans-serif'] = ['FangSong'] # 指定默认字体
-mpl.rcParams['axes.unicode_minus'] = False # 解决保存图像是负号'-'显示为方块的问题
-
+## 将表格导出为图片
 def render_mpl_table(data, col_width=3.0, row_height=0.625, font_size=14,
                      header_color='#40466e', row_colors=['#f1f1f2', 'w'], edge_color='w',
                      bbox=[0, 0, 1, 1], header_columns=0,
                      ax=None, title=None,**kwargs):
+    
+    import matplotlib.pyplot as plt
+    import six
+    from pylab import mpl
+    mpl.rcParams['font.sans-serif'] = ['FangSong'] # 指定默认字体
+    mpl.rcParams['axes.unicode_minus'] = False # 解决保存图像是负号'-'显示为方块的问题
+    
     if ax is None:
         size = (np.array(data.shape[::-1]) + np.array([0, 1])) * np.array([col_width, row_height])
         fig, ax = plt.subplots(figsize=size)
@@ -232,10 +234,16 @@ def render_mpl_table(data, col_width=3.0, row_height=0.625, font_size=14,
 
     return ax
 
-# 设定手动开关
+## 设定手动开关
 switch = 0
 
-if day_of_week == 'Friday' or switch:
+if day_of_week == 'Friday' and switch:
+
+    # 本月发券使用统计
+    df_month_quan_used = df_quan_used[df_quan_used['生效时间'] >= dtnow.strftime('%Y-%m-01')]
+
+    # 累计发券使用统计
+    df_all_quan_used = df_quan_used
 
     gp_month_quan_used = table_clean(df_month_quan_used)
     gp_all_quan_used =  table_clean(df_all_quan_used)
