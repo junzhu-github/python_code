@@ -19,10 +19,14 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # ---------------------------------------------------
 
-for i in range(100):
-    s = '*'*i
-    print('\r{}'.format(s),end='')
-    time.sleep(1)
+s = pd.Series([2, 4, 6, 8, 10])
+
+# ---------------------------------------------------
+
+# for i in range(100):
+#     s = '*'*i
+#     print('\r{}'.format(s),end='')
+#     time.sleep(1)
 
 # ---------------------------------------------------
 
