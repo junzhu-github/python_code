@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+# coding=utf-8
+'''
+@Date: 2019-01-04 10:02:44
+@Author: YING
+@LastEditTime: 2019-08-27 15:31:24
+'''
 # -*- coding: utf-8 -*- 
 
 # @author: ying
@@ -19,7 +26,13 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # ---------------------------------------------------
 
-s = pd.Series([2, 4, 6, 8, 10])
+def count_down(n):
+    while n+1:
+        print('倒计时：{} s'.format(n),end='\r')
+        time.sleep(1)
+        n -= 1
+
+count_down(10)
 
 # ---------------------------------------------------
 

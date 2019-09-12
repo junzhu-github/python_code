@@ -1,3 +1,11 @@
+#!/usr/bin/env python
+# coding=utf-8
+'''
+@Date: 2019-04-04 15:33:44
+@Author: YING
+@LastEditTime: 2019-09-04 15:32:12
+'''
+
 import os
 
 import pandas as pd
@@ -5,7 +13,7 @@ import xlwings as xw
 
 filelist = []
 
-dir_address = r'C:\百度云同步盘\小鸡理财\数据报告\互金协会数据报送\每月数据获取\2019.06\报送数据(2019年6月)'
+dir_address = r'C:\百度云同步盘\小鸡理财\数据报告\互金协会数据报送\每月数据获取\2019.08\报送数据2019-08'
 for root, dirs, files in os.walk(dir_address, topdown=False):
     for name in files:
         str = os.path.join(root, name)
@@ -27,7 +35,7 @@ for i in filelist:
 
     xls.close()
     app.quit()
-    print('{} is added'.format(i.split('\\')[-1]))
+    print('{} is added'.format(i.split('\\')[-1]),end='\r')
 
 print('\nall xls is merged')
 

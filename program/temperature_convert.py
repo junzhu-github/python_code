@@ -14,4 +14,4 @@ elif val[-1] in ['f','F']:
     print(f"转换后的温度为 {c}C")
 else:
     print('wrong input')
-    
+    35
