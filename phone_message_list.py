@@ -1,10 +1,23 @@
+#!/usr/bin/env python
+# coding=utf-8
+'''
+@Date: 2019-07-16 10:42:34
+@Author: YING
+@LastEditTime: 2019-09-18 15:39:44
+'''
 # coding: utf-8
 
 # 导入库
+import datetime as dt
+import os
 import pandas as pd
 
+# 切换工作目录
+path = r'C:\百度云同步盘\小鸡理财\短信发送记录'
+os.chdir(path)
+
 # 导入表格
-df = pd.read_excel(r'C:\百度云同步盘\小鸡理财\短信发送记录\短信名单.xlsx')
+df = pd.read_excel('短信名单.xlsx')
 
 # 短信黑名单
 black_list = [13175198841,13588059774]
@@ -40,4 +53,6 @@ m = res.shape[0]
 print('\n 一共有  {}  人\n'.format(m))
 
 # 导出名单
-res.to_excel(r'C:\百度云同步盘\小鸡理财\短信发送记录\短信名单result.xlsx',index=False)
+timestamp = dt.datetime.now().strftime("%Y-%m-%d %H%M%S")
+excel_name = '短信名单result_' + str(timestamp) + '.xlsx'
+res.to_excel(excel_name,index=False)

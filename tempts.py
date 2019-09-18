@@ -3,7 +3,7 @@
 '''
 @Date: 2019-01-04 10:02:44
 @Author: YING
-@LastEditTime: 2019-08-27 15:31:24
+@LastEditTime: 2019-09-18 15:17:16
 '''
 # -*- coding: utf-8 -*- 
 
@@ -26,13 +26,17 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # ---------------------------------------------------
 
-def count_down(n):
-    while n+1:
-        print('倒计时：{} s'.format(n),end='\r')
-        time.sleep(1)
-        n -= 1
+print(str(dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
-count_down(10)
+# ---------------------------------------------------
+
+# def count_down(n):
+#     while n+1:
+#         print('倒计时：{} s'.format(n),end='\r')
+#         time.sleep(1)
+#         n -= 1
+
+# count_down(10)
 
 # ---------------------------------------------------
 
