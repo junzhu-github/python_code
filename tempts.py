@@ -3,7 +3,7 @@
 '''
 @Date: 2019-01-04 10:02:44
 @Author: YING
-@LastEditTime: 2019-08-27 15:31:24
+@LastEditTime: 2019-10-21 15:56:39
 '''
 # -*- coding: utf-8 -*- 
 
@@ -26,13 +26,38 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # ---------------------------------------------------
 
-def count_down(n):
-    while n+1:
-        print('倒计时：{} s'.format(n),end='\r')
-        time.sleep(1)
-        n -= 1
+# import turtle as t
+# t.goto(100,0)
+# for i in range(100):#修改这个次数可以更改他的画的圈数
+#     t.left(80)
+#     t.fd(100)
+#     t.left(135)
+#     t.fd(105)
 
-count_down(10)
+from turtle import *
+color('red', 'yellow')
+begin_fill()
+while True:
+    forward(200)
+    left(170)
+    if abs(pos()) < 1:
+        break
+end_fill()
+done()
+
+# ---------------------------------------------------
+
+# print(str(dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+
+# ---------------------------------------------------
+
+# def count_down(n):
+#     while n+1:
+#         print('倒计时：{} s'.format(n),end='\r')
+#         time.sleep(1)
+#         n -= 1
+
+# count_down(10)
 
 # ---------------------------------------------------
 

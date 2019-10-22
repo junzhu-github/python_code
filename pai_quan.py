@@ -3,7 +3,7 @@
 '''
 @Date: 2019-01-04 10:02:36
 @Author: YING
-@LastEditTime: 2019-09-04 17:51:41
+@LastEditTime: 2019-10-16 18:02:28
 '''
 # coding: utf-8
 
@@ -59,10 +59,10 @@ def handle_xls(new_xls):
 
 # 券名单生成
 def coupon_list(dt_today,day_of_week,dt_hour,df_quan_not_use,df_quan_use):
-    os.chdir(r'C:\百度云同步盘\小鸡理财\每日数据\派券')
+    os.chdir(r'E:\OneDrive - xbsf.cursotamandare.g12.br\小鸡理财\每日数据\派券')
 
     # 导入待派券名单
-    with pd.ExcelFile(r'C:\百度云同步盘\小鸡理财\每日数据\派券\9月派券.xlsx') as xlsx:
+    with pd.ExcelFile(r'E:\OneDrive - xbsf.cursotamandare.g12.br\小鸡理财\每日数据\派券\10月派券.xlsx') as xlsx:
         df_cg = pd.read_excel(xlsx,'存管回款')
         # df_quan_not_use = pd.read_excel(xlsx,'券')
         # df_quan_use = pd.read_excel(xlsx,'已派券')
@@ -74,6 +74,7 @@ def coupon_list(dt_today,day_of_week,dt_hour,df_quan_not_use,df_quan_use):
     # 整理回款表
     df_hk['发放时间'] = pd.to_datetime(df_hk['预计本次发放时间'])
     del df_hk['预计本次发放时间']
+
 
     if day_of_week == 'Friday':
         print('\n---happy 周末 !---\n')
@@ -87,7 +88,6 @@ def coupon_list(dt_today,day_of_week,dt_hour,df_quan_not_use,df_quan_use):
         timediff = pd.Timedelta(weekend_num,unit='d')
         dt_ff_2 = dt_today + timediff
         dt_ff_2 = dt_ff_2.strftime('%Y.%m.%d')
-
         df_hk_today = df_hk[(df_hk['发放时间'] >= dt_ff_1) & (df_hk['发放时间'] <= dt_ff_2)]
 
         dt_ff = str(dt_ff_1) + '-' + str(dt_ff_2)
@@ -96,7 +96,6 @@ def coupon_list(dt_today,day_of_week,dt_hour,df_quan_not_use,df_quan_use):
         timediff = pd.Timedelta(0,unit='d')
         dt_ff = dt_today + timediff
         dt_ff = dt_ff.strftime('%Y.%m.%d')
-
         df_hk_today = df_hk[(df_hk['发放时间'] == dt_ff)]
     else:
         print('\n---平时 is choosed!---\n')
@@ -345,10 +344,10 @@ def main():
     dt_month_01 = pd.to_datetime('today').strftime('%Y-%m-01')
 
     # 手动，截至2019-12-31
-    handle = ['2019-09-12','2019-09-27','2019-09-29','2019-09-30','2019-10-11','2019-10-12']
+    handle = ['2019-09-30','2019-10-12']
 
     # 不用派券
-    holiday = ['2019-09-13','2019-10-01','2019-10-02','2019-10-03','2019-10-04','2019-10-07'] 
+    holiday = ['2019-10-01','2019-10-02','2019-10-03','2019-10-04','2019-10-07'] 
     
     ## 日期判断
     if dt_today_day == dt_month_01:
@@ -369,7 +368,7 @@ def main():
     start = time.time()
 
     quan_not_use = 'https://cg.xiaojilicai.com/admin/coupon/publishcoupon?username=&realname=&cellphone=&company_name=&coupon_alias=&use_status=1&refer_id=&pack_name=&bill_id=&start_time=&end_time=&start_time2=&end_time2=&export=1&async=0&__hash__=e776bcc8348b125590c7d83c83cb054d_c884f04a16d4ae6d1fee5a9407ca9481'
-    quan_use = 'https://cg.xiaojilicai.com/admin/coupon/publishcoupon?username=&realname=&cellphone=&company_name=&coupon_alias=%E7%A7%8B%E9%A3%8E%E9%80%81%E7%A4%BC%E7%A6%8F%E5%88%A9&use_status=&refer_id=&pack_name=&bill_id=&start_time=2019-09-01&end_time=&start_time2=&end_time2=&export=1&async=0&__hash__=e776bcc8348b125590c7d83c83cb054d_cb2b4970047067183088f7fd69988ce8'
+    quan_use = 'https://cg.xiaojilicai.com/admin/coupon/publishcoupon?username=&realname=&cellphone=&company_name=&coupon_alias=%E7%A7%8B%E9%A3%8E%E9%80%81%E7%A4%BC%E7%A6%8F%E5%88%A9&use_status=&refer_id=&pack_name=&bill_id=&start_time=2019-10-01&end_time=&start_time2=&end_time2=&export=1&async=0&__hash__=e776bcc8348b125590c7d83c83cb054d_cb2b4970047067183088f7fd69988ce8'
     download_url = [quan_not_use,quan_use]
     xls_name = ['quan_not_use','quan_use']
     
@@ -378,7 +377,7 @@ def main():
     
     for i,j in zip(xls_name,download_url):
         download_data(j)    # 下载
-        count_down(30,s='下载等待')
+        count_down(99,s='下载等待')
         new_xls = newest_xls()  # 捕获下载文件
         
         n = 2
@@ -410,9 +409,6 @@ def main():
     count_down(60,'60s后发送邮件')
     
 
-    # x = input('Press y to send mail...')
-    # if str(x) == 'y':
-
     send_res,_ = send_mail(coupon_list_name,coupon_string)
     if send_res == 221:
         print('\n邮件发送成功！')
@@ -420,7 +416,5 @@ def main():
         print('\n邮件发送失败，需手动处理！')
     
     count_down(60)
-    # print()    
-    # input('Press any key to exit.')
 
 main()

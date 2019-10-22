@@ -1,10 +1,23 @@
+#!/usr/bin/env python
+# coding=utf-8
+'''
+@Date: 2019-07-16 10:42:34
+@Author: YING
+@LastEditTime: 2019-10-17 10:17:21
+'''
 # coding: utf-8
 
 # 导入库
+import datetime as dt
+import os
 import pandas as pd
 
+# 切换工作目录
+path = r'E:\OneDrive - xbsf.cursotamandare.g12.br\小鸡理财\短信发送记录'
+os.chdir(path)
+
 # 导入表格
-df = pd.read_excel(r'C:\百度云同步盘\小鸡理财\短信发送记录\短信名单.xlsx')
+df = pd.read_excel('短信名单.xlsx')
 
 # 短信黑名单
 black_list = [13175198841,13588059774]
@@ -14,9 +27,14 @@ n = df.shape[1]
 
 # 合并数据
 res = pd.DataFrame()
-for i in range(int(n/2)):
-    temp = df.iloc[:,[i*2,i*2+1]]
-    temp.columns = ['用户名', '手机号']
+# for i in range(int(n/2)):
+#     temp = df.iloc[:,[i*2,i*2+1]]
+#     temp.columns = ['用户名', '手机号']
+#     res = res.append(temp)
+
+for i in range(int(n/3)):
+    temp = df.iloc[:,[i*3,i*3+1,i*3+2]]
+    temp.columns = ['用户名', '姓名','手机号']
     res = res.append(temp)
 
 # 去重
@@ -40,4 +58,6 @@ m = res.shape[0]
 print('\n 一共有  {}  人\n'.format(m))
 
 # 导出名单
-res.to_excel(r'C:\百度云同步盘\小鸡理财\短信发送记录\短信名单result.xlsx',index=False)
+timestamp = dt.datetime.now().strftime("%Y-%m-%d %H%M%S")
+excel_name = '短信名单result_' + str(timestamp) + '.xlsx'
+res.to_excel(excel_name,index=False)

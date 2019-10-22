@@ -3,7 +3,7 @@
 '''
 @Date: 2019-08-19 16:03:47
 @Author: YING
-@LastEditTime: 2019-08-28 10:44:39
+@LastEditTime: 2019-10-18 10:58:31
 '''
 import os
 import time
@@ -30,14 +30,7 @@ def calu_max_gap(pic_matrix):
                 gap = max(pic_matrix[i,j,:]) - min(pic_matrix[i,j,:])
                 pic_gap.append(gap)
         return pic_gap
-    
-
-    # for i in range(pic_matrix.shape[0]):
-    #     for j in range(pic_matrix.shape[1]):
-    #         gap = max(pic_matrix[i,j,:]) - min(pic_matrix[i,j,:])
-    #         pic_gap.append(gap)
-    # return pic_gap
-    
+       
 def move_pic(pic_name,moved_path):
     if not os.path.exists(moved_path):
         os.mkdir(moved_path)
@@ -48,10 +41,10 @@ def move_pic(pic_name,moved_path):
 
 def main():
     start_time = time.time()
-    path = r'F:\new\newfile'
-    move_to_path = r'F:\new\black and white'
-    not_pic_path = r'F:\new\not a pic'
-    normal_pic = r'F:\new\normal_pic'
+    path = r'F:\迅雷下载\chuquan'
+    move_to_path = r'F:\迅雷下载\black and white'
+    not_pic_path = r'F:\迅雷下载\not a pic'
+    normal_pic = r'F:\迅雷下载\normal_pic'
 
     os.chdir(path)
     print('程序已启动！')
