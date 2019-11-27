@@ -3,7 +3,7 @@
 '''
 @Date: 2019-01-04 10:02:36
 @Author: YING
-@LastEditTime: 2019-10-16 18:02:28
+@LastEditTime: 2019-11-21 18:09:47
 '''
 # coding: utf-8
 
@@ -49,12 +49,13 @@ def newest_xls():
 
 # 处理表格
 def handle_xls(new_xls):
+    print('开始处理表格...')
     app = xw.App(visible=False, add_book=False)
     xls = app.books.open(new_xls)
     sheet = xls.sheets[0]
     dataframe = sheet.range('A1').options(pd.DataFrame, expand='table').value
     xls.close()
-    app.quit()   
+    app.quit() 
     return dataframe
 
 # 券名单生成
@@ -62,7 +63,7 @@ def coupon_list(dt_today,day_of_week,dt_hour,df_quan_not_use,df_quan_use):
     os.chdir(r'E:\OneDrive - xbsf.cursotamandare.g12.br\小鸡理财\每日数据\派券')
 
     # 导入待派券名单
-    with pd.ExcelFile(r'E:\OneDrive - xbsf.cursotamandare.g12.br\小鸡理财\每日数据\派券\10月派券.xlsx') as xlsx:
+    with pd.ExcelFile(r'E:\OneDrive - xbsf.cursotamandare.g12.br\小鸡理财\每日数据\派券\11月派券.xlsx') as xlsx:
         df_cg = pd.read_excel(xlsx,'存管回款')
         # df_quan_not_use = pd.read_excel(xlsx,'券')
         # df_quan_use = pd.read_excel(xlsx,'已派券')
@@ -148,7 +149,7 @@ def coupon_list(dt_today,day_of_week,dt_hour,df_quan_not_use,df_quan_use):
 
 
     # 排除已经派了 4 次的人
-    df_quaned_select = df_quan_use.loc[df_quan_use['券别名'].isin(['秋风送礼福利（1）','秋风送礼福利（3）']),:]
+    df_quaned_select = df_quan_use.loc[df_quan_use['券别名'].isin(['暖冬福利（1）','暖冬福利（3）']),:]
     gp_quaned = df_quaned_select.groupby('会员名',as_index=False)['ID'].count()
     p4 = gp_quaned[gp_quaned['ID'] >= 4]
     df_hk_today_res_3 = df_hk_today_res_2[~(df_hk_today_res_2['会员名'].isin(p4['会员名']))]
@@ -202,7 +203,7 @@ def coupon_list(dt_today,day_of_week,dt_hour,df_quan_not_use,df_quan_use):
 # 券表格整理
 def table_clean(df):
     # 冻结→已使用
-    select_name = ['秋风送礼福利（1）','秋风送礼福利（2）','秋风送礼福利（3）','秋风送礼福利（4）']
+    select_name = ['暖冬福利（1）','暖冬福利（2）','暖冬福利（3）','暖冬福利（4）']
     df = df[df['券别名'].isin(select_name)].copy()
     df['使用情况'] = df['使用状态'].replace('投标冻结','已使用')
 
@@ -368,7 +369,7 @@ def main():
     start = time.time()
 
     quan_not_use = 'https://cg.xiaojilicai.com/admin/coupon/publishcoupon?username=&realname=&cellphone=&company_name=&coupon_alias=&use_status=1&refer_id=&pack_name=&bill_id=&start_time=&end_time=&start_time2=&end_time2=&export=1&async=0&__hash__=e776bcc8348b125590c7d83c83cb054d_c884f04a16d4ae6d1fee5a9407ca9481'
-    quan_use = 'https://cg.xiaojilicai.com/admin/coupon/publishcoupon?username=&realname=&cellphone=&company_name=&coupon_alias=%E7%A7%8B%E9%A3%8E%E9%80%81%E7%A4%BC%E7%A6%8F%E5%88%A9&use_status=&refer_id=&pack_name=&bill_id=&start_time=2019-10-01&end_time=&start_time2=&end_time2=&export=1&async=0&__hash__=e776bcc8348b125590c7d83c83cb054d_cb2b4970047067183088f7fd69988ce8'
+    quan_use = 'https://cg.xiaojilicai.com/admin/coupon/publishcoupon?username=&realname=&cellphone=&company_name=&coupon_alias=%E6%9A%96%E5%86%AC%E7%A6%8F%E5%88%A9&use_status=&refer_id=&pack_name=&bill_id=&start_time=2019-11-01&end_time=&start_time2=&end_time2=&export=1&async=0&__hash__=e776bcc8348b125590c7d83c83cb054d_ff4846798e4b78177e58ce9674a11d1a'
     download_url = [quan_not_use,quan_use]
     xls_name = ['quan_not_use','quan_use']
     
@@ -377,7 +378,7 @@ def main():
     
     for i,j in zip(xls_name,download_url):
         download_data(j)    # 下载
-        count_down(99,s='下载等待')
+        count_down(60,s='下载等待')
         new_xls = newest_xls()  # 捕获下载文件
         
         n = 2

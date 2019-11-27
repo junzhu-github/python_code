@@ -3,11 +3,7 @@
 '''
 @Date: 2019-01-04 10:02:44
 @Author: YING
-<<<<<<< HEAD
-@LastEditTime: 2019-10-21 15:56:39
-=======
-@LastEditTime: 2019-09-18 15:17:16
->>>>>>> 3b0279f925a67a2803fd09c26994de8c7c24f4ba
+@LastEditTime: 2019-11-27 17:57:23
 '''
 # -*- coding: utf-8 -*- 
 
@@ -30,7 +26,12 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # ---------------------------------------------------
 
-<<<<<<< HEAD
+print("1")
+os.system("pause")
+print("2")
+
+# ---------------------------------------------------
+
 # import turtle as t
 # t.goto(100,0)
 # for i in range(100):#修改这个次数可以更改他的画的圈数
@@ -39,16 +40,16 @@ from mpl_toolkits.mplot3d import Axes3D
 #     t.left(135)
 #     t.fd(105)
 
-from turtle import *
-color('red', 'yellow')
-begin_fill()
-while True:
-    forward(200)
-    left(170)
-    if abs(pos()) < 1:
-        break
-end_fill()
-done()
+# from turtle import *
+# color('red', 'yellow')
+# begin_fill()
+# while True:
+#     forward(200)
+#     left(170)
+#     if abs(pos()) < 1:
+#         break
+# end_fill()
+# done()
 
 # ---------------------------------------------------
 
@@ -56,12 +57,10 @@ done()
 
 # ---------------------------------------------------
 
-=======
-print(str(dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+# print(str(dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
 # ---------------------------------------------------
 
->>>>>>> 3b0279f925a67a2803fd09c26994de8c7c24f4ba
 # def count_down(n):
 #     while n+1:
 #         print('倒计时：{} s'.format(n),end='\r')

@@ -3,11 +3,7 @@
 '''
 @Date: 2019-07-16 10:42:34
 @Author: YING
-<<<<<<< HEAD
-@LastEditTime: 2019-10-17 10:17:21
-=======
-@LastEditTime: 2019-09-18 15:39:44
->>>>>>> 3b0279f925a67a2803fd09c26994de8c7c24f4ba
+@LastEditTime: 2019-10-25 14:41:26
 '''
 # coding: utf-8
 
@@ -17,11 +13,7 @@ import os
 import pandas as pd
 
 # 切换工作目录
-<<<<<<< HEAD
 path = r'E:\OneDrive - xbsf.cursotamandare.g12.br\小鸡理财\短信发送记录'
-=======
-path = r'C:\百度云同步盘\小鸡理财\短信发送记录'
->>>>>>> 3b0279f925a67a2803fd09c26994de8c7c24f4ba
 os.chdir(path)
 
 # 导入表格

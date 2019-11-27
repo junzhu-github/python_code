@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+# coding=utf-8
+'''
+@Date: 2019-04-25 10:45:51
+@Author: YING
+@LastEditTime: 2019-11-14 11:14:40
+'''
 # -*- coding: utf-8 -*- 
 
 # @author: ying
@@ -45,11 +52,14 @@ def list_file_walk(path):
     return file_dict
 
 
-file_path = r'F:\新建文件夹'
-d = list_file_walk(file_path)
+file_path = r'E:\OneDrive - xbsf.cursotamandare.g12.br\我的资源\book\kindle人打包'
+
+file_type_num(file_path)
+
+# d = list_file_walk(file_path)
 # print(d)
 
-with open('y.txt','w', encoding="utf-8") as f:
-    for k,v in d.items():
-        f.write(k + '   '+ str(v) + 'MB' + '\n')
+# with open('y.txt','w', encoding="utf-8") as f:
+#     for k,v in d.items():
+#         f.write(k + '   '+ str(v) + 'MB' + '\n')
 print('~~~end~~~')
