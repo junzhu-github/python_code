@@ -1,11 +1,11 @@
 <!--
  * @Date: 2019-09-18 15:50:08
  * @Author: YING
- * @LastEditTime: 2019-09-18 15:56:04
+ * @LastEditTime: 2019-12-03 15:19:50
  -->
 
-"python.pythonPath": "C:\\Users\\Dragon\\AppData\\Local\\Programs\\Python\\Python37\\python.exe",
-"files.autoSave": "afterDelay",
+"python.pythonPath": 
+"C:\\Users\\Dragon\\AppData\\Local\\Programs\\Python\\Python37\\python.exe","files.autoSave": "afterDelay",
 
 # koroFileHeader
     "fileheader.configObj": {

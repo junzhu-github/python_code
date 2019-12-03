@@ -5,7 +5,7 @@ import numpy as np
 
 x = 10
 l = np.random.permutation(x)
-print('before:',l)
+print('before:', l)
 
 # n = len(l) - 1
 
@@ -22,12 +22,15 @@ print('before:',l)
 # ----------------------------------------------
 
 # book
+
+
 def bubble_sort(l):
-  for passnum in range(len(l)-1,0,-1):
-    for j in range(passnum):
-      if l[j]>l[j+1]:
-        l[j], l[j+1] = l[j+1], l[j]
+    for passnum in range(len(l)-1, 0, -1):
+        for j in range(passnum):
+            if l[j] > l[j+1]:
+                l[j], l[j+1] = l[j+1], l[j]
+
 
 bubble_sort(l)
 
-print('after:',l)
+print('after:', l)
