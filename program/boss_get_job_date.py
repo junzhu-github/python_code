@@ -2,15 +2,18 @@
 '''
 @Date: 2020-05-28 21:42:26
 @Author: YING
-@LastEditTime: 2020-07-27 20:52:46
+LastEditTime: 2020-09-02 21:03:54
 '''
 
 # @author: ying
 
+import datetime as dt
 import json
 import os
+
 import pandas as pd
 from bs4 import BeautifulSoup, SoupStrainer
+
 
 # 读取本地html文件，输出json信息
 def get_info(file_name,only_a_tags):
@@ -20,7 +23,12 @@ def get_info(file_name,only_a_tags):
     return info_dict
 
 # 主程序
-os.chdir(r'D:\JunZhu\My Downloads\工作\boss数据20200727')
+
+# 切换工作目录
+work_url = r'D:\JunZhu\My Downloads\工作'
+html_path = 'boss运营20200902'
+
+os.chdir(os.path.join(work_url,html_path))
 file_lists = os.listdir('.')
 
 only_a_tags = SoupStrainer("script", type='application/ld+json')
@@ -35,9 +43,25 @@ for i in file_lists:
     print('已完成第 {} 个'.format(l)) 
     l += 1
 
-print('全部html已经读取完成，开始导出excel！\n')
+print('全部html已经读取完成！\n')
 
 df = pd.DataFrame(info_list)
-df.to_excel(r'D:\JunZhu\My Downloads\工作\boss数据20200727.xlsx')
+
+# 去重
+df = df.drop_duplicates('@id')
+print('去重后剩余 {} 条信息!\n'.format(df.shape[0]))
+
+# 筛选更新时间小于15天的信息
+df['upDate'] = pd.to_datetime(df['upDate'])
+df = df[(dt.datetime.now() - df['upDate']).dt.days<=15]
+print('小于15天的信息有 {} 条.\n'.format(df.shape[0]))
+
+# 对更新时间排序
+df.sort_values('upDate',ascending=False,inplace=True)
+
+
+os.chdir(work_url)
+file_name = html_path + '.xlsx'
+df.to_excel(file_name,index = False)
 
 print('END')

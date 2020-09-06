@@ -3,7 +3,7 @@
 '''
 @Date: 2019-01-04 10:02:44
 @Author: YING
-@LastEditTime: 2019-11-27 17:57:23
+LastEditTime: 2020-08-18 20:57:01
 '''
 # -*- coding: utf-8 -*- 
 
@@ -25,10 +25,31 @@ import xlwings as xw
 from mpl_toolkits.mplot3d import Axes3D
 
 # ---------------------------------------------------
+# s = '经全部读取完成'
+# if '全部1' in s:
+#     print('111')
 
-print("1")
-os.system("pause")
-print("2")
+os.chdir(r'D:\JunZhu\My Downloads\工作\boss运营列表20200818')
+print(os.getcwd())
+
+work_url = 'D:\JunZhu\My Downloads\工作'
+html_path = 'boss运营列表20200818'
+
+os.chdir(os.path.join(work_url,html_path))
+print(os.getcwd())
+
+# ---------------------------------------------------
+# x = int(input('input:'))
+
+# if x == 1:
+#     print('111')
+# elif x == 2:
+#     print('222')
+# ---------------------------------------------------
+
+# print("1")
+# os.system("pause")
+# print("2")
 
 # ---------------------------------------------------
 
