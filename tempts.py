@@ -3,40 +3,44 @@
 '''
 @Date: 2019-01-04 10:02:44
 @Author: YING
-LastEditTime: 2020-08-18 20:57:01
+LastEditTime: 2020-10-06 20:40:26
 '''
 # -*- coding: utf-8 -*- 
 
 # @author: ying
 
+# import datetime as dt
+# import os
+# import re
+# import sys
+# import time
 
-import datetime as dt
-import os
-import re
-import sys
-import time
-
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-import requests
-import six
-import xlwings as xw
-from mpl_toolkits.mplot3d import Axes3D
+# import matplotlib.pyplot as plt
+# import numpy as np
+# import pandas as pd
+# import requests
+# import six
+# import xlwings as xw
+# from mpl_toolkits.mplot3d import Axes3D
 
 # ---------------------------------------------------
 # s = '经全部读取完成'
 # if '全部1' in s:
 #     print('111')
 
-os.chdir(r'D:\JunZhu\My Downloads\工作\boss运营列表20200818')
-print(os.getcwd())
+# os.chdir(r'D:\JunZhu\My Downloads\工作\boss运营列表20200818')
+# print(os.getcwd())
 
-work_url = 'D:\JunZhu\My Downloads\工作'
-html_path = 'boss运营列表20200818'
+# work_url = 'D:\JunZhu\My Downloads\工作'
+# html_path = 'boss运营列表20200818'
 
-os.chdir(os.path.join(work_url,html_path))
-print(os.getcwd())
+# os.chdir(os.path.join(work_url,html_path))
+# print(os.getcwd())
+
+x = 'abc'
+y = 'abcd'
+
+print(x is y)
 
 # ---------------------------------------------------
 # x = int(input('input:'))

@@ -2,7 +2,7 @@
 '''
 @Date: 2020-06-01 16:04:41
 @Author: YING
-LastEditTime: 2020-09-02 20:33:40
+LastEditTime: 2020-09-09 01:10:04
 '''
 
 import os
@@ -30,8 +30,8 @@ def get_info(file_name,only_a_tags):
 # 主程序
 
 # 切换工作目录
-work_url = 'D:\JunZhu\My Downloads\工作'
-html_path = 'boss运营列表20200902'
+work_url = r'D:\JunZhu\My Downloads\工作'
+html_path = 'boss数据列表20200908'
 
 os.chdir(os.path.join(work_url,html_path))
 file_lists = os.listdir('.')
